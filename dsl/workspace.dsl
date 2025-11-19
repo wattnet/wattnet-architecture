@@ -12,20 +12,20 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
         user = person "User" "An individual who accesses and analyzes environmental impact data through wattnet."
 
-        external_consumer = softwareSystem "External Consumer" "A third-party system or service that connects to wattnet to retrieve and use environmental impact data." "external" {
+        external_consumer = softwareSystem "External Consumer" "A third-party system or service that connects to wattnet to retrieve and use environmental impact data." "External" {
         }
 
-        entsoe_api = softwareSystem "ENTSO-E Public API" "European Network of Transmission System Operators for Electricity RESTful API." "external" {
+        entsoe_api = softwareSystem "ENTSO-E Public API" "European Network of Transmission System Operators for Electricity RESTful API." "External" {
         }
 
         wattnet = softwareSystem "wattnet" "An open-source service for tracking the environmental footprint of electricity across Europe." {
 
             frontend = group "Frontend" {
-                dashboard = container "Dashboard" " The dashboard lets you explore all metrics in a clear, interactive, and visually engaging interface. " "Angular" "dashboard" {
+                dashboard = container "Dashboard" " The dashboard lets you explore all metrics in a clear, interactive, and visually engaging interface. " "Angular" "Dashboard" {
                     service = component "Service" "Service description."
                 }
 
-                grafana = container "Grafana" "Metrics visualization and \n monitoring dashboards. \n Only for monitoring." "Docker: grafana/grafana" "dashboard-ops"{
+                grafana = container "Grafana" "Metrics visualization and \n monitoring dashboards. \n Only for monitoring." "Docker: grafana/grafana" "Dashboard/Monitor"{
                 }
             }
 
@@ -63,7 +63,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                     zone_manager = component "Zone Manager" "Handles the zones of the electrical energy map, along with their attributes and status." "Python"
 
-                    zones_definition = component "Zones Definition" "Specify zones along with their EIC codes, data providers, and cross-border interconnections." "Directory with YAML Files" "repository"
+                    zones_definition = component "Zones Definition" "Specify zones along with their EIC codes, data providers, and cross-border interconnections." "Directory with YAML Files" "Repository"
 
                     provider_connector = component "Provider Connector" "Plug-in system to connect to different electrical energy provider clients." "Python"
 
@@ -88,7 +88,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
                     victoriametrics = component "VictoriaMetrics" "Time-series database for storing and querying metrics." "Docker: victoriametrics/victoria-metrics"
                 }
 
-                impacts_db = container "Impacts Database" "Carbon Neutrality in the UNECE Region: Integrated Life-cycle Assessment of Electricity Sources." "Directory with YAML Files" "repository" {
+                impacts_db = container "Impacts Database" "Carbon Neutrality in the UNECE Region: Integrated Life-cycle Assessment of Electricity Sources." "Directory with YAML Files" "Repository" {
                 }
 
                 forecast_engine = container "Forecast Engine" "Forecasts short-term future environmental impact metrics based on historical data." "Python" {
@@ -97,7 +97,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                     metrics_repository_adapter = component "Metrics Repository Adapter" "Reads metrics from storage and writes forecasted values back to the Metrics Repository." "Python"
 
-                    lstm = component "LSTM Model" "Long Short-Term Memory model for environmental footprint time-series data forecasting." "Python" "model"
+                    lstm = component "LSTM Model" "Long Short-Term Memory model for environmental footprint time-series data forecasting." "Python" "Model"
 
                     drift_detector = component "Drift Detector" "Detects data drift in time-series data to ensure model accuracy." "Python"
                 }
@@ -108,7 +108,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                     repository_reader = component "Metrics Repository Reader" "Reads metrics from storage for model training and inference." "Python"
 
-                    extrapolation_model = component "Extrapolation Model" "Machine learning model for inferring missing data points in time-series data." "Python" "model"
+                    extrapolation_model = component "Extrapolation Model" "Machine learning model for inferring missing data points in time-series data." "Python" "Model"
 
                     drift_detector = component "Drift Detector" "Detects data drift in time-series data to ensure model accuracy." "Python"
                 }
@@ -194,7 +194,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
             include *
         }
 
-        component wattnet.core_engine wattnet_engine {
+        component wattnet.core_engine wattnet_core_engine {
             include *
         }
 
@@ -247,31 +247,31 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
                 color #94CE24
             }
 
-            element "dashboard" {
+            element "Dashboard" {
                 shape webbrowser
                 background #5374A7
                 color #ffffff
             }
 
-            element "dashboard-ops" {
+            element "Dashboard/Monitor" {
                 shape webbrowser
                 background #5588e6
                 color #ffffff
             }
 
-            element "repository" {
+            element "Repository" {
                 shape folder
                 background #94CE24
                 color #143262
             }
 
-            element "external" {
+            element "External" {
                 shape roundedbox
                 background #0B1C38
                 color #e6e6e6
             }
 
-            element "model" {
+            element "Model" {
                 shape folder
                 background #2e63c2
                 color #ffffff
