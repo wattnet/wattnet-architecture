@@ -42,9 +42,9 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
                         factor_controller = component "Factor Controller" "Handles requests related to environmental impact factors." "Python / FastAPI"
                     }
 
-                    footprint_service = component "Footprint Service" "Reads environmental impact metrics from the metrics storage." "Python / PromQL"
+                    footprint_service = component "Footprint Service" "Reads environmental impact metrics from the metrics storage." "Python"
 
-                    factor_service = component "Factor Service" "Reads environmental impact factors from the metrics storage." "Python / PromQL"
+                    factor_service = component "Factor Service" "Reads environmental impact factors from the metrics storage." "Python"
                 }
 
                 core_engine = container "Core Engine" "Fetch and processes electricity generation data to compute environmental impact metrics." "Python" {
