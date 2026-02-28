@@ -18,6 +18,9 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         entsoe_api = softwareSystem "ENTSO-E Public API" "European Network of Transmission System Operators for Electricity RESTful API." "External" {
         }
 
+        elexon_api = softwareSystem "Elexon Insights API" "Elexon Insights RESTful API for operational data about the electricity system in Great Britain." "External" {
+        }
+
         wattnet = softwareSystem "wattnet" "An open-source service for tracking the environmental footprint of electricity across Europe." {
 
             frontend = group "Frontend" {
@@ -26,6 +29,9 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
                 }
 
                 grafana = container "Grafana" "Metrics visualization and \n monitoring dashboards. \n Only for monitoring." "Docker: grafana/grafana" "Dashboard/Monitor"{
+                }
+
+                tools = container "Data Tools" "Command-line tools for dataset extractor, analyzer, and visualizer." "Python" "Dashboard/Monitor"{
                 }
             }
 
@@ -37,25 +43,27 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                     v1 = group "v1" {
 
-                        footprint_controller = component "Footprint Controller" "Handles requests related to environmental impact metrics." "Python / FastAPI"
-
-                        factor_controller = component "Factor Controller" "Handles requests related to environmental impact factors." "Python / FastAPI"
+                        metric_controller = component "Generic Metric Controller" "Handles requests related to system domain metrics, such as generation, import, export, footprint, flow share, mix share, footprint share and factors." "Python / FastAPI"
+                        
                     }
 
-                    footprint_service = component "Footprint Service" "Reads environmental impact metrics from the metrics storage." "Python"
+                    metrics_service = component "Generic Metric Service" "Contains the business logic for processing and retrieving environmental impact metrics." "Python"
 
-                    factor_service = component "Factor Service" "Reads environmental impact factors from the metrics storage." "Python"
+                    geo_service = component "Geo Service" "Provides geographical data and utilities related to latitudes, longitudes, and zone mapping." "Python"
+
+                    operations_service = component "Operations Service" "Provides utilities for performing operations on time-series data, such as aggregation, filtering, and normalization." "Python"
+
                 }
 
                 core_engine = container "Core Engine" "Fetch and processes electricity generation data to compute environmental impact metrics." "Python" {
 
                     manager = component "Workflow Manager" "Manages the workflow of the metrics engine." "Python"
 
-                    entsoe_client = component "ENTSO-E Client" "Provides an interface that retrieves and processes electricity market and power grid data from ENTSO-E." "Python"
-
                     factors_reader = component "Factors Reader" "Reads environmental impact factors from YAML files." "Python"
 
                     map_builder = component "Map Builder" "Generates the electrical energy map according zones definition and ENTSO-E metrics." "Python"
+
+                    map_printer = component "Map Printer" "Prints the electrical energy map in a visual format for debugging and analysis purposes." "Python"
 
                     impacts_calculator = component "Impacts Calculator" "Computes electrical energy downstream composition matrix and environmental impact metrics." "Python"
 
@@ -63,15 +71,27 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                     zone_manager = component "Zone Manager" "Handles the zones of the electrical energy map, along with their attributes and status." "Python"
 
-                    zones_definition = component "Zones Definition" "Specify zones along with their EIC codes, data providers, and cross-border interconnections." "Directory with YAML Files" "Repository"
+                    providers_manager = component "Providers Manager" "Orchestrates pluggable provider implementations." "Python"
 
-                    provider_connector = component "Provider Connector" "Plug-in system to connect to different electrical energy provider clients." "Python"
+                    provider_interface = component "Provider Interface" "Abstract contract implemented by all providers." "Python"
 
-                    writer_manager = component "Writer Manager" "Handles writing of computed metrics to the metrics storage." "Python"
+                    entsoe_client = component "ENTSOE Provider Client" "Retrieves electricity data from ENTSO-E API." "Python"
 
-                    interpolator = component "Data Interpolator" "Leverages AI-driven self-trained models to intelligently infer missing points on data series." "Python"
+                    elexon_client = component "Elexon Provider Client" "Retrieves electricity data from Elexon API." "Python"
+
+                    storage_manager = component "Storage Manager" "Handles writing of computed metrics to the metrics storage." "Python"
+
+                    outlier_manager = component "Outlier Manager" "Manages outlier detection and handling in time-series data." "Python"
+
+                    lag_collector = component "Lag Collector" "Collects and manages lag data for outlier detection in time-series data." "Python"
 
                     outlier_detector = component "Outlier Detector" "Detects outliers in time-series data to ensure data quality." "Python"
+
+                    estimator_manager = component "Estimator Manager" "Manages estimation techniques for handling missing or incomplete data." "Python"
+
+                    estimator_interface = component "Estimator Interface" "Abstract contract implemented by all estimation techniques." "Python"
+
+                    hybrid_energy_estimator = component "Hybrid Energy Estimator" "Combines multiple estimation techniques to infer missing or incomplete data points in time-series data." "Python"
 
                 }
 
@@ -83,34 +103,32 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                     storage_manager = component "Storage Backend Manager" "Manages different storage backends and their configurations." "Python"
 
-                    victoriametrics_client = component "VictoriaMetrics Client" "Handles connection and queries to the VictoriaMetrics backend." "Python / PromQL"
+                    storage_backend_interface = component "Storage Backend Interface" "Abstract contract implemented by all storage backends." "Python"
 
-                    victoriametrics = component "VictoriaMetrics" "Time-series database for storing and querying metrics." "Docker: victoriametrics/victoria-metrics"
-                }
+                    clickhouse_client = component "ClickHouse Client" "Handles connection and queries to the ClickHouse backend." "Python / SQL"
 
-                impacts_db = container "Impacts Database" "Carbon Neutrality in the UNECE Region: Integrated Life-cycle Assessment of Electricity Sources." "Directory with YAML Files" "Repository" {
+                    clickhouse = component "ClickHouse" "Open-source column-oriented DBMS (columnar database management system) for online analytical processing (OLAP)" "Docker: clickhouse/clickhouse-server"
                 }
 
                 forecast_engine = container "Forecast Engine" "Forecasts short-term future environmental impact metrics based on historical data." "Python" {
 
                     manager = component "Workflow Manager" "Manages the workflow of the forecast engine." "Python"
 
-                    metrics_repository_adapter = component "Metrics Repository Adapter" "Reads metrics from storage and writes forecasted values back to the Metrics Repository." "Python"
+                    storage_manager = component "Storage Manager" "Reads metrics from storage and writes forecasted values back to the Metrics Repository." "Python"
 
-                    lstm = component "LSTM Model" "Long Short-Term Memory model for environmental footprint time-series data forecasting." "Python" "Model"
+                    forecast_manager = component "Forecast Manager" "Orchestrates the forecasting process, including data retrieval, and model execution." "Python"
 
-                    drift_detector = component "Drift Detector" "Detects data drift in time-series data to ensure model accuracy." "Python"
+                    lag_collector = component "Lag Collector" "Collects and manages lag data for predictive modeling in time-series data." "Python"
+
+                    predictor_interface = component "Predictor Interface" "Abstract contract implemented by all predictive models." "Python"
+
+                    auto_regressive_predictor = component "Auto-Regressive Predictor" "Predictive model that uses auto-regressive techniques to forecast future metrics based on historical data." "Python"
                 }
 
-                inference_engine = container "Inference Engine" "Trains and applies machine learning models to fill in missing raw data points." "Python" {
+                impacts_db = container "Impacts Database" "Carbon Neutrality in the UNECE Region: Integrated Life-cycle Assessment of Electricity Sources." "Directory with YAML Files" "Repository" {
+                }
 
-                    manager = component "Workflow Manager" "Manages the workflow of the inference engine." "Python"
-
-                    repository_reader = component "Metrics Repository Reader" "Reads metrics from storage for model training and inference." "Python"
-
-                    extrapolation_model = component "Extrapolation Model" "Machine learning model for inferring missing data points in time-series data." "Python" "Model"
-
-                    drift_detector = component "Drift Detector" "Detects data drift in time-series data to ensure model accuracy." "Python"
+                zones_definition = container "Zones Definition" "Specify zones along with their EIC codes, data providers, and cross-border interconnections." "Directory with YAML Files" "Repository" {
                 }
             }
         }
@@ -122,55 +140,57 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         external_consumer -> wattnet.api.runner "Request" "api.wattnet.eu/v1"
         wattnet.dashboard.service -> wattnet.api.runner "Request" "api.wattnet.eu/v1"
 
-        wattnet.api.runner -> wattnet.api.footprint_controller "Uses"
-        wattnet.api.runner -> wattnet.api.factor_controller "Uses"
-
-        wattnet.api.footprint_controller -> wattnet.api.footprint_service "Uses"
-        wattnet.api.factor_controller -> wattnet.api.factor_service "Uses"
-
-        wattnet.api.footprint_service -> wattnet.storage.metrics_repository "Reads" 
-        wattnet.api.factor_service -> wattnet.storage.metrics_repository "Reads"
+        wattnet.api.runner -> wattnet.api.metric_controller "Routes Requests"
+        wattnet.api.metric_controller -> wattnet.api.metrics_service "Uses"
+        wattnet.api.metrics_service -> wattnet.api.geo_service "Uses"
+        wattnet.api.metrics_service -> wattnet.api.operations_service "Uses"
+        wattnet.api.metrics_service -> wattnet.storage.metrics_repository "Reads"
 
         wattnet.core_engine.manager -> wattnet.core_engine.map_builder "Uses" 
         wattnet.core_engine.manager -> wattnet.core_engine.impacts_calculator "Uses"    
-        wattnet.core_engine.manager -> wattnet.core_engine.writer_manager "Uses"
-        wattnet.core_engine.writer_manager -> wattnet.storage.metrics_repository "Reads / Writes"
+        wattnet.core_engine.manager -> wattnet.core_engine.storage_manager "Uses"
+        wattnet.core_engine.storage_manager -> wattnet.storage.metrics_repository "Reads / Writes"
 
         wattnet.core_engine.map_builder -> wattnet.core_engine.flowtracing "Uses" 
         wattnet.core_engine.map_builder -> wattnet.core_engine.zone_manager "Uses" 
+        wattnet.core_engine.map_builder -> wattnet.core_engine.map_printer "Uses"
+        wattnet.core_engine.zone_manager -> wattnet.zones_definition "Reads" "YAML Files"
+        wattnet.core_engine.zone_manager -> wattnet.core_engine.providers_manager "Uses" 
+        wattnet.core_engine.providers_manager -> wattnet.core_engine.provider_interface "Uses"
+        wattnet.core_engine.entsoe_client -> wattnet.core_engine.provider_interface "Implements"
+        wattnet.core_engine.elexon_client -> wattnet.core_engine.provider_interface "Implements"
+        wattnet.core_engine.entsoe_client -> entsoe_api "Request Data" "web-api.tp.entsoe.eu/api"
+        wattnet.core_engine.elexon_client -> elexon_api "Request Data" "data.elexon.co.uk/bmrs/api/v1"
+        wattnet.core_engine.providers_manager -> wattnet.core_engine.outlier_manager "Uses"
 
-        wattnet.core_engine.zone_manager -> wattnet.core_engine.zones_definition "Reads" "YAML Files"
-        wattnet.core_engine.zone_manager -> wattnet.core_engine.provider_connector "Uses" 
-        wattnet.core_engine.provider_connector -> wattnet.core_engine.entsoe_client "Fetch"
-        wattnet.core_engine.provider_connector -> wattnet.core_engine.interpolator "Fetch" "as a fallback"
-        wattnet.core_engine.entsoe_client -> entsoe_api "Request" "entsoe.eu/api" 
+        wattnet.core_engine.outlier_manager -> wattnet.core_engine.lag_collector "Uses"
+        wattnet.core_engine.outlier_manager -> wattnet.core_engine.outlier_detector "Uses"
+        wattnet.core_engine.lag_collector -> wattnet.core_engine.storage_manager "Uses"
 
-        wattnet.core_engine.map_builder -> wattnet.core_engine.outlier_detector "Uses"
-        wattnet.core_engine.outlier_detector -> wattnet.core_engine.writer_manager "Uses"
-        wattnet.core_engine.outlier_detector -> wattnet.core_engine.interpolator "Uses"
+        wattnet.core_engine.outlier_manager -> wattnet.core_engine.estimator_manager "Uses"
+        wattnet.core_engine.estimator_manager -> wattnet.core_engine.estimator_interface "Uses"
+        wattnet.core_engine.hybrid_energy_estimator -> wattnet.core_engine.estimator_interface "Implements"
 
         wattnet.core_engine.impacts_calculator -> wattnet.core_engine.factors_reader "Fetch"
         wattnet.core_engine.factors_reader -> wattnet.impacts_db "Reads" "YAML Files"
-
-        wattnet.core_engine.interpolator -> wattnet.inference_engine.extrapolation_model "Uses"
-        wattnet.core_engine.interpolator -> wattnet.core_engine.writer_manager "Uses"
     
         wattnet.storage.metrics_repository -> wattnet.storage.time_series_processor "Uses"
         wattnet.storage.metrics_repository -> wattnet.storage.storage_manager "Uses"
-        wattnet.storage.storage_manager -> wattnet.storage.victoriametrics_client "Uses"
-        wattnet.storage.victoriametrics_client -> wattnet.storage.victoriametrics "Reads / Writes" "PromQL"
+        wattnet.storage.storage_manager -> wattnet.storage.storage_backend_interface "Uses"
+        wattnet.storage.clickhouse_client -> wattnet.storage.storage_backend_interface "Implements"
+        wattnet.storage.clickhouse_client -> wattnet.storage.clickhouse "Reads / Writes" "SQL"
 
-        wattnet.grafana -> wattnet.storage.victoriametrics "Queries" "PromQL"
+        wattnet.grafana -> wattnet.storage.clickhouse "Queries" "SQL"
+        wattnet.tools -> wattnet.storage.metrics_repository "Reads" 
 
-        wattnet.inference_engine.manager -> wattnet.inference_engine.repository_reader "Uses"
-        wattnet.inference_engine.manager -> wattnet.inference_engine.drift_detector "Uses"
-        wattnet.inference_engine.manager -> wattnet.inference_engine.extrapolation_model "Generates"
-        wattnet.inference_engine.repository_reader -> wattnet.storage.metrics_repository "Reads"
-
-        wattnet.forecast_engine.manager -> wattnet.forecast_engine.metrics_repository_adapter "Uses"
-        wattnet.forecast_engine.manager -> wattnet.forecast_engine.drift_detector "Uses"
-        wattnet.forecast_engine.manager -> wattnet.forecast_engine.lstm "Generates/Reads"
-        wattnet.forecast_engine.metrics_repository_adapter -> wattnet.storage.metrics_repository "Reads / Writes" 
+        wattnet.forecast_engine.manager -> wattnet.forecast_engine.forecast_manager "Uses"
+        wattnet.forecast_engine.storage_manager -> wattnet.storage.metrics_repository "Reads / Writes"
+        wattnet.forecast_engine.forecast_manager -> wattnet.zones_definition "Reads" "YAML Files"
+        wattnet.forecast_engine.forecast_manager -> wattnet.forecast_engine.storage_manager "Uses"
+        wattnet.forecast_engine.forecast_manager -> wattnet.forecast_engine.lag_collector "Uses"
+        wattnet.forecast_engine.lag_collector -> wattnet.forecast_engine.storage_manager "Uses"
+        wattnet.forecast_engine.forecast_manager -> wattnet.forecast_engine.predictor_interface "Uses"
+        wattnet.forecast_engine.auto_regressive_predictor -> wattnet.forecast_engine.predictor_interface "Implements"
 
     }
 
@@ -199,10 +219,6 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         }
 
         component wattnet.storage wattnet_storage {
-            include *
-        }
-
-        component wattnet.inference_engine wattnet_inference_engine {
             include *
         }
 

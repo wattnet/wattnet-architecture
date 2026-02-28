@@ -3,7 +3,8 @@
   "description" : "An open-source service for tracking the environmental footprint of electricity across Europe.",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2025-11-20T08:48:59Z",
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2026-02-28T00:00:39Z",
   "model" : {
     "people" : [ {
       "description" : "An individual who accesses and analyzes environmental impact data through wattnet.",
@@ -15,16 +16,16 @@
       },
       "relationships" : [ {
         "description" : "Uses",
-        "destinationId" : "5",
-        "id" : "44",
+        "destinationId" : "6",
+        "id" : "51",
         "sourceId" : "1",
         "tags" : "Relationship",
         "technology" : "dashboard.wattnet.eu"
       }, {
         "description" : "Uses",
-        "destinationId" : "4",
-        "id" : "45",
-        "linkedRelationshipId" : "44",
+        "destinationId" : "5",
+        "id" : "52",
+        "linkedRelationshipId" : "51",
         "sourceId" : "1",
         "technology" : "dashboard.wattnet.eu"
       } ],
@@ -44,23 +45,23 @@
       },
       "relationships" : [ {
         "description" : "Request",
-        "destinationId" : "9",
-        "id" : "46",
+        "destinationId" : "11",
+        "id" : "53",
         "sourceId" : "2",
         "tags" : "Relationship",
         "technology" : "api.wattnet.eu/v1"
       }, {
         "description" : "Request",
-        "destinationId" : "8",
-        "id" : "47",
-        "linkedRelationshipId" : "46",
+        "destinationId" : "10",
+        "id" : "54",
+        "linkedRelationshipId" : "53",
         "sourceId" : "2",
         "technology" : "api.wattnet.eu/v1"
       }, {
         "description" : "Request",
-        "destinationId" : "4",
-        "id" : "48",
-        "linkedRelationshipId" : "46",
+        "destinationId" : "5",
+        "id" : "55",
+        "linkedRelationshipId" : "53",
         "sourceId" : "2",
         "technology" : "api.wattnet.eu/v1"
       } ],
@@ -76,28 +77,38 @@
       },
       "tags" : "Element,Software System,External"
     }, {
+      "description" : "Elexon Insights RESTful API for operational data about the electricity system in Great Britain.",
+      "documentation" : { },
+      "id" : "4",
+      "location" : "Unspecified",
+      "name" : "Elexon Insights API",
+      "properties" : {
+        "structurizr.dsl.identifier" : "elexon_api"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
       "containers" : [ {
         "components" : [ {
           "description" : "Service description.",
           "documentation" : { },
-          "id" : "6",
+          "id" : "7",
           "name" : "Service",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.dashboard.service"
           },
           "relationships" : [ {
             "description" : "Request",
-            "destinationId" : "9",
-            "id" : "49",
-            "sourceId" : "6",
+            "destinationId" : "11",
+            "id" : "56",
+            "sourceId" : "7",
             "tags" : "Relationship",
             "technology" : "api.wattnet.eu/v1"
           }, {
             "description" : "Request",
-            "destinationId" : "8",
-            "id" : "50",
-            "linkedRelationshipId" : "49",
-            "sourceId" : "6",
+            "destinationId" : "10",
+            "id" : "57",
+            "linkedRelationshipId" : "56",
+            "sourceId" : "7",
             "technology" : "api.wattnet.eu/v1"
           } ],
           "tags" : "Element,Component"
@@ -105,24 +116,24 @@
         "description" : "The dashboard lets you explore all metrics in a clear, interactive, and visually engaging interface.",
         "documentation" : { },
         "group" : "Frontend",
-        "id" : "5",
+        "id" : "6",
         "name" : "Dashboard",
         "properties" : {
           "structurizr.dsl.identifier" : "wattnet.dashboard"
         },
         "relationships" : [ {
           "description" : "Request",
-          "destinationId" : "9",
-          "id" : "51",
-          "linkedRelationshipId" : "49",
-          "sourceId" : "5",
+          "destinationId" : "11",
+          "id" : "58",
+          "linkedRelationshipId" : "56",
+          "sourceId" : "6",
           "technology" : "api.wattnet.eu/v1"
         }, {
           "description" : "Request",
-          "destinationId" : "8",
-          "id" : "52",
-          "linkedRelationshipId" : "49",
-          "sourceId" : "5",
+          "destinationId" : "10",
+          "id" : "59",
+          "linkedRelationshipId" : "56",
+          "sourceId" : "6",
           "technology" : "api.wattnet.eu/v1"
         } ],
         "tags" : "Element,Container,Dashboard",
@@ -131,155 +142,164 @@
         "description" : "Metrics visualization and \n monitoring dashboards. \n Only for monitoring.",
         "documentation" : { },
         "group" : "Frontend",
-        "id" : "7",
+        "id" : "8",
         "name" : "Grafana",
         "properties" : {
           "structurizr.dsl.identifier" : "wattnet.grafana"
         },
         "relationships" : [ {
           "description" : "Queries",
-          "destinationId" : "32",
-          "id" : "94",
-          "sourceId" : "7",
+          "destinationId" : "41",
+          "id" : "105",
+          "sourceId" : "8",
           "tags" : "Relationship",
-          "technology" : "PromQL"
+          "technology" : "SQL"
         }, {
           "description" : "Queries",
-          "destinationId" : "27",
-          "id" : "95",
-          "linkedRelationshipId" : "94",
-          "sourceId" : "7",
-          "technology" : "PromQL"
+          "destinationId" : "35",
+          "id" : "106",
+          "linkedRelationshipId" : "105",
+          "sourceId" : "8",
+          "technology" : "SQL"
         } ],
         "tags" : "Element,Container,Dashboard/Monitor",
         "technology" : "Docker: grafana/grafana"
       }, {
+        "description" : "Command-line tools for dataset extractor, analyzer, and visualizer.",
+        "documentation" : { },
+        "group" : "Frontend",
+        "id" : "9",
+        "name" : "Data Tools",
+        "properties" : {
+          "structurizr.dsl.identifier" : "wattnet.tools"
+        },
+        "relationships" : [ {
+          "description" : "Reads",
+          "destinationId" : "36",
+          "id" : "107",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Reads",
+          "destinationId" : "35",
+          "id" : "108",
+          "linkedRelationshipId" : "107",
+          "sourceId" : "9"
+        } ],
+        "tags" : "Element,Container,Dashboard/Monitor",
+        "technology" : "Python"
+      }, {
         "components" : [ {
           "description" : "Initializes the FastAPI server and manages the API lifecycle.",
           "documentation" : { },
-          "id" : "9",
+          "id" : "11",
           "name" : "API Runner",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.api.runner"
           },
           "relationships" : [ {
-            "description" : "Uses",
-            "destinationId" : "10",
-            "id" : "53",
-            "sourceId" : "9",
-            "tags" : "Relationship"
-          }, {
-            "description" : "Uses",
-            "destinationId" : "11",
-            "id" : "54",
-            "sourceId" : "9",
+            "description" : "Routes Requests",
+            "destinationId" : "12",
+            "id" : "60",
+            "sourceId" : "11",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
           "technology" : "Python / Uvicorn"
         }, {
-          "description" : "Handles requests related to environmental impact metrics.",
+          "description" : "Handles requests related to system domain metrics, such as generation, import, export, footprint, flow share, mix share, footprint share and factors.",
           "documentation" : { },
           "group" : "v1",
-          "id" : "10",
-          "name" : "Footprint Controller",
+          "id" : "12",
+          "name" : "Generic Metric Controller",
           "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.api.footprint_controller"
-          },
-          "relationships" : [ {
-            "description" : "Uses",
-            "destinationId" : "12",
-            "id" : "55",
-            "sourceId" : "10",
-            "tags" : "Relationship"
-          } ],
-          "tags" : "Element,Component",
-          "technology" : "Python / FastAPI"
-        }, {
-          "description" : "Handles requests related to environmental impact factors.",
-          "documentation" : { },
-          "group" : "v1",
-          "id" : "11",
-          "name" : "Factor Controller",
-          "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.api.factor_controller"
+            "structurizr.dsl.identifier" : "wattnet.api.metric_controller"
           },
           "relationships" : [ {
             "description" : "Uses",
             "destinationId" : "13",
-            "id" : "56",
-            "sourceId" : "11",
+            "id" : "61",
+            "sourceId" : "12",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
           "technology" : "Python / FastAPI"
         }, {
-          "description" : "Reads environmental impact metrics from the metrics storage.",
-          "documentation" : { },
-          "id" : "12",
-          "name" : "Footprint Service",
-          "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.api.footprint_service"
-          },
-          "relationships" : [ {
-            "description" : "Reads",
-            "destinationId" : "28",
-            "id" : "57",
-            "sourceId" : "12",
-            "tags" : "Relationship"
-          }, {
-            "description" : "Reads",
-            "destinationId" : "27",
-            "id" : "58",
-            "linkedRelationshipId" : "57",
-            "sourceId" : "12"
-          } ],
-          "tags" : "Element,Component",
-          "technology" : "Python"
-        }, {
-          "description" : "Reads environmental impact factors from the metrics storage.",
+          "description" : "Contains the business logic for processing and retrieving environmental impact metrics.",
           "documentation" : { },
           "id" : "13",
-          "name" : "Factor Service",
+          "name" : "Generic Metric Service",
           "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.api.factor_service"
+            "structurizr.dsl.identifier" : "wattnet.api.metrics_service"
           },
           "relationships" : [ {
-            "description" : "Reads",
-            "destinationId" : "28",
-            "id" : "61",
+            "description" : "Uses",
+            "destinationId" : "14",
+            "id" : "62",
+            "sourceId" : "13",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Uses",
+            "destinationId" : "15",
+            "id" : "63",
             "sourceId" : "13",
             "tags" : "Relationship"
           }, {
             "description" : "Reads",
-            "destinationId" : "27",
-            "id" : "62",
-            "linkedRelationshipId" : "61",
+            "destinationId" : "36",
+            "id" : "64",
+            "sourceId" : "13",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Reads",
+            "destinationId" : "35",
+            "id" : "65",
+            "linkedRelationshipId" : "64",
             "sourceId" : "13"
           } ],
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Provides geographical data and utilities related to latitudes, longitudes, and zone mapping.",
+          "documentation" : { },
+          "id" : "14",
+          "name" : "Geo Service",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.api.geo_service"
+          },
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Provides utilities for performing operations on time-series data, such as aggregation, filtering, and normalization.",
+          "documentation" : { },
+          "id" : "15",
+          "name" : "Operations Service",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.api.operations_service"
+          },
           "tags" : "Element,Component",
           "technology" : "Python"
         } ],
         "description" : "Provides a stateless standard interface for accessing environmental impact metrics.",
         "documentation" : { },
         "group" : "Backend",
-        "id" : "8",
+        "id" : "10",
         "name" : "RESTful API",
         "properties" : {
           "structurizr.dsl.identifier" : "wattnet.api"
         },
         "relationships" : [ {
           "description" : "Reads",
-          "destinationId" : "28",
-          "id" : "59",
-          "linkedRelationshipId" : "57",
-          "sourceId" : "8"
+          "destinationId" : "36",
+          "id" : "66",
+          "linkedRelationshipId" : "64",
+          "sourceId" : "10"
         }, {
           "description" : "Reads",
-          "destinationId" : "27",
-          "id" : "60",
-          "linkedRelationshipId" : "57",
-          "sourceId" : "8"
+          "destinationId" : "35",
+          "id" : "67",
+          "linkedRelationshipId" : "64",
+          "sourceId" : "10"
         } ],
         "tags" : "Element,Container",
         "technology" : "FastAPI"
@@ -287,63 +307,45 @@
         "components" : [ {
           "description" : "Manages the workflow of the metrics engine.",
           "documentation" : { },
-          "id" : "15",
+          "id" : "17",
           "name" : "Workflow Manager",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.core_engine.manager"
           },
           "relationships" : [ {
             "description" : "Uses",
-            "destinationId" : "18",
-            "id" : "63",
-            "sourceId" : "15",
-            "tags" : "Relationship"
-          }, {
-            "description" : "Uses",
             "destinationId" : "19",
-            "id" : "64",
-            "sourceId" : "15",
+            "id" : "68",
+            "sourceId" : "17",
             "tags" : "Relationship"
           }, {
             "description" : "Uses",
-            "destinationId" : "24",
-            "id" : "65",
-            "sourceId" : "15",
+            "destinationId" : "21",
+            "id" : "69",
+            "sourceId" : "17",
             "tags" : "Relationship"
-          } ],
-          "tags" : "Element,Component",
-          "technology" : "Python"
-        }, {
-          "description" : "Provides an interface that retrieves and processes electricity market and power grid data from ENTSO-E.",
-          "documentation" : { },
-          "id" : "16",
-          "name" : "ENTSO-E Client",
-          "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.core_engine.entsoe_client"
-          },
-          "relationships" : [ {
-            "description" : "Request",
-            "destinationId" : "3",
-            "id" : "76",
-            "sourceId" : "16",
-            "tags" : "Relationship",
-            "technology" : "entsoe.eu/api"
+          }, {
+            "description" : "Uses",
+            "destinationId" : "28",
+            "id" : "70",
+            "sourceId" : "17",
+            "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
           "technology" : "Python"
         }, {
           "description" : "Reads environmental impact factors from YAML files.",
           "documentation" : { },
-          "id" : "17",
+          "id" : "18",
           "name" : "Factors Reader",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.core_engine.factors_reader"
           },
           "relationships" : [ {
             "description" : "Reads",
-            "destinationId" : "33",
-            "id" : "83",
-            "sourceId" : "17",
+            "destinationId" : "49",
+            "id" : "98",
+            "sourceId" : "18",
             "tags" : "Relationship",
             "technology" : "YAML Files"
           } ],
@@ -352,45 +354,55 @@
         }, {
           "description" : "Generates the electrical energy map according zones definition and ENTSO-E metrics.",
           "documentation" : { },
-          "id" : "18",
+          "id" : "19",
           "name" : "Map Builder",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.core_engine.map_builder"
           },
           "relationships" : [ {
             "description" : "Uses",
+            "destinationId" : "22",
+            "id" : "75",
+            "sourceId" : "19",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Uses",
+            "destinationId" : "23",
+            "id" : "76",
+            "sourceId" : "19",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Uses",
             "destinationId" : "20",
-            "id" : "70",
-            "sourceId" : "18",
-            "tags" : "Relationship"
-          }, {
-            "description" : "Uses",
-            "destinationId" : "21",
-            "id" : "71",
-            "sourceId" : "18",
-            "tags" : "Relationship"
-          }, {
-            "description" : "Uses",
-            "destinationId" : "26",
-            "id" : "79",
-            "sourceId" : "18",
+            "id" : "77",
+            "sourceId" : "19",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
           "technology" : "Python"
         }, {
+          "description" : "Prints the electrical energy map in a visual format for debugging and analysis purposes.",
+          "documentation" : { },
+          "id" : "20",
+          "name" : "Map Printer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.core_engine.map_printer"
+          },
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
           "description" : "Computes electrical energy downstream composition matrix and environmental impact metrics.",
           "documentation" : { },
-          "id" : "19",
+          "id" : "21",
           "name" : "Impacts Calculator",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.core_engine.impacts_calculator"
           },
           "relationships" : [ {
             "description" : "Fetch",
-            "destinationId" : "17",
-            "id" : "82",
-            "sourceId" : "19",
+            "destinationId" : "18",
+            "id" : "97",
+            "sourceId" : "21",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
@@ -398,7 +410,7 @@
         }, {
           "description" : "Computes electrical energy upstream distribution matrix using a flow-tracing approach.",
           "documentation" : { },
-          "id" : "20",
+          "id" : "22",
           "name" : "Flow-Tracing Algorithm",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.core_engine.flowtracing"
@@ -408,109 +420,173 @@
         }, {
           "description" : "Handles the zones of the electrical energy map, along with their attributes and status.",
           "documentation" : { },
-          "id" : "21",
+          "id" : "23",
           "name" : "Zone Manager",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.core_engine.zone_manager"
           },
           "relationships" : [ {
             "description" : "Reads",
-            "destinationId" : "22",
-            "id" : "72",
-            "sourceId" : "21",
+            "destinationId" : "50",
+            "id" : "78",
+            "sourceId" : "23",
             "tags" : "Relationship",
             "technology" : "YAML Files"
           }, {
             "description" : "Uses",
-            "destinationId" : "23",
-            "id" : "73",
-            "sourceId" : "21",
+            "destinationId" : "24",
+            "id" : "80",
+            "sourceId" : "23",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
           "technology" : "Python"
         }, {
-          "description" : "Specify zones along with their EIC codes, data providers, and cross-border interconnections.",
+          "description" : "Orchestrates pluggable provider implementations.",
           "documentation" : { },
-          "id" : "22",
-          "name" : "Zones Definition",
+          "id" : "24",
+          "name" : "Providers Manager",
           "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.core_engine.zones_definition"
-          },
-          "tags" : "Element,Component,Repository",
-          "technology" : "Directory with YAML Files"
-        }, {
-          "description" : "Plug-in system to connect to different electrical energy provider clients.",
-          "documentation" : { },
-          "id" : "23",
-          "name" : "Provider Connector",
-          "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.core_engine.provider_connector"
+            "structurizr.dsl.identifier" : "wattnet.core_engine.providers_manager"
           },
           "relationships" : [ {
-            "description" : "Fetch",
-            "destinationId" : "16",
-            "id" : "74",
-            "sourceId" : "23",
+            "description" : "Uses",
+            "destinationId" : "25",
+            "id" : "81",
+            "sourceId" : "24",
             "tags" : "Relationship"
           }, {
-            "description" : "Fetch",
+            "description" : "Uses",
+            "destinationId" : "29",
+            "id" : "90",
+            "sourceId" : "24",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Abstract contract implemented by all providers.",
+          "documentation" : { },
+          "id" : "25",
+          "name" : "Provider Interface",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.core_engine.provider_interface"
+          },
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Retrieves electricity data from ENTSO-E API.",
+          "documentation" : { },
+          "id" : "26",
+          "name" : "ENTSOE Provider Client",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.core_engine.entsoe_client"
+          },
+          "relationships" : [ {
+            "description" : "Implements",
             "destinationId" : "25",
-            "id" : "75",
-            "sourceId" : "23",
+            "id" : "82",
+            "sourceId" : "26",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Request Data",
+            "destinationId" : "3",
+            "id" : "84",
+            "sourceId" : "26",
             "tags" : "Relationship",
-            "technology" : "as a fallback"
+            "technology" : "web-api.tp.entsoe.eu/api"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Retrieves electricity data from Elexon API.",
+          "documentation" : { },
+          "id" : "27",
+          "name" : "Elexon Provider Client",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.core_engine.elexon_client"
+          },
+          "relationships" : [ {
+            "description" : "Implements",
+            "destinationId" : "25",
+            "id" : "83",
+            "sourceId" : "27",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Request Data",
+            "destinationId" : "4",
+            "id" : "87",
+            "sourceId" : "27",
+            "tags" : "Relationship",
+            "technology" : "data.elexon.co.uk/bmrs/api/v1"
           } ],
           "tags" : "Element,Component",
           "technology" : "Python"
         }, {
           "description" : "Handles writing of computed metrics to the metrics storage.",
           "documentation" : { },
-          "id" : "24",
-          "name" : "Writer Manager",
+          "id" : "28",
+          "name" : "Storage Manager",
           "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.core_engine.writer_manager"
+            "structurizr.dsl.identifier" : "wattnet.core_engine.storage_manager"
           },
           "relationships" : [ {
             "description" : "Reads / Writes",
-            "destinationId" : "28",
-            "id" : "66",
-            "sourceId" : "24",
+            "destinationId" : "36",
+            "id" : "71",
+            "sourceId" : "28",
             "tags" : "Relationship"
           }, {
             "description" : "Reads / Writes",
-            "destinationId" : "27",
-            "id" : "67",
-            "linkedRelationshipId" : "66",
-            "sourceId" : "24"
+            "destinationId" : "35",
+            "id" : "72",
+            "linkedRelationshipId" : "71",
+            "sourceId" : "28"
           } ],
           "tags" : "Element,Component",
           "technology" : "Python"
         }, {
-          "description" : "Leverages AI-driven self-trained models to intelligently infer missing points on data series.",
+          "description" : "Manages outlier detection and handling in time-series data.",
           "documentation" : { },
-          "id" : "25",
-          "name" : "Data Interpolator",
+          "id" : "29",
+          "name" : "Outlier Manager",
           "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.core_engine.interpolator"
+            "structurizr.dsl.identifier" : "wattnet.core_engine.outlier_manager"
           },
           "relationships" : [ {
             "description" : "Uses",
-            "destinationId" : "42",
-            "id" : "85",
-            "sourceId" : "25",
+            "destinationId" : "30",
+            "id" : "91",
+            "sourceId" : "29",
             "tags" : "Relationship"
           }, {
             "description" : "Uses",
-            "destinationId" : "39",
-            "id" : "86",
-            "linkedRelationshipId" : "85",
-            "sourceId" : "25"
+            "destinationId" : "31",
+            "id" : "92",
+            "sourceId" : "29",
+            "tags" : "Relationship"
           }, {
             "description" : "Uses",
-            "destinationId" : "24",
-            "id" : "89",
-            "sourceId" : "25",
+            "destinationId" : "32",
+            "id" : "94",
+            "sourceId" : "29",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Collects and manages lag data for outlier detection in time-series data.",
+          "documentation" : { },
+          "id" : "30",
+          "name" : "Lag Collector",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.core_engine.lag_collector"
+          },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "28",
+            "id" : "93",
+            "sourceId" : "30",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
@@ -518,22 +594,53 @@
         }, {
           "description" : "Detects outliers in time-series data to ensure data quality.",
           "documentation" : { },
-          "id" : "26",
+          "id" : "31",
           "name" : "Outlier Detector",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.core_engine.outlier_detector"
           },
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Manages estimation techniques for handling missing or incomplete data.",
+          "documentation" : { },
+          "id" : "32",
+          "name" : "Estimator Manager",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.core_engine.estimator_manager"
+          },
           "relationships" : [ {
             "description" : "Uses",
-            "destinationId" : "24",
-            "id" : "80",
-            "sourceId" : "26",
+            "destinationId" : "33",
+            "id" : "95",
+            "sourceId" : "32",
             "tags" : "Relationship"
-          }, {
-            "description" : "Uses",
-            "destinationId" : "25",
-            "id" : "81",
-            "sourceId" : "26",
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Abstract contract implemented by all estimation techniques.",
+          "documentation" : { },
+          "id" : "33",
+          "name" : "Estimator Interface",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.core_engine.estimator_interface"
+          },
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Combines multiple estimation techniques to infer missing or incomplete data points in time-series data.",
+          "documentation" : { },
+          "id" : "34",
+          "name" : "Hybrid Energy Estimator",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.core_engine.hybrid_energy_estimator"
+          },
+          "relationships" : [ {
+            "description" : "Implements",
+            "destinationId" : "33",
+            "id" : "96",
+            "sourceId" : "34",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
@@ -542,49 +649,51 @@
         "description" : "Fetch and processes electricity generation data to compute environmental impact metrics.",
         "documentation" : { },
         "group" : "Backend",
-        "id" : "14",
+        "id" : "16",
         "name" : "Core Engine",
         "properties" : {
           "structurizr.dsl.identifier" : "wattnet.core_engine"
         },
         "relationships" : [ {
           "description" : "Reads / Writes",
-          "destinationId" : "28",
-          "id" : "68",
-          "linkedRelationshipId" : "66",
-          "sourceId" : "14"
+          "destinationId" : "36",
+          "id" : "73",
+          "linkedRelationshipId" : "71",
+          "sourceId" : "16"
         }, {
           "description" : "Reads / Writes",
-          "destinationId" : "27",
-          "id" : "69",
-          "linkedRelationshipId" : "66",
-          "sourceId" : "14"
-        }, {
-          "description" : "Request",
-          "destinationId" : "3",
-          "id" : "77",
-          "linkedRelationshipId" : "76",
-          "sourceId" : "14",
-          "technology" : "entsoe.eu/api"
+          "destinationId" : "35",
+          "id" : "74",
+          "linkedRelationshipId" : "71",
+          "sourceId" : "16"
         }, {
           "description" : "Reads",
-          "destinationId" : "33",
-          "id" : "84",
-          "linkedRelationshipId" : "83",
-          "sourceId" : "14",
+          "destinationId" : "50",
+          "id" : "79",
+          "linkedRelationshipId" : "78",
+          "sourceId" : "16",
           "technology" : "YAML Files"
         }, {
-          "description" : "Uses",
-          "destinationId" : "42",
-          "id" : "87",
-          "linkedRelationshipId" : "85",
-          "sourceId" : "14"
+          "description" : "Request Data",
+          "destinationId" : "3",
+          "id" : "85",
+          "linkedRelationshipId" : "84",
+          "sourceId" : "16",
+          "technology" : "web-api.tp.entsoe.eu/api"
         }, {
-          "description" : "Uses",
-          "destinationId" : "39",
+          "description" : "Request Data",
+          "destinationId" : "4",
           "id" : "88",
-          "linkedRelationshipId" : "85",
-          "sourceId" : "14"
+          "linkedRelationshipId" : "87",
+          "sourceId" : "16",
+          "technology" : "data.elexon.co.uk/bmrs/api/v1"
+        }, {
+          "description" : "Reads",
+          "destinationId" : "49",
+          "id" : "99",
+          "linkedRelationshipId" : "98",
+          "sourceId" : "16",
+          "technology" : "YAML Files"
         } ],
         "tags" : "Element,Container",
         "technology" : "Python"
@@ -592,22 +701,22 @@
         "components" : [ {
           "description" : "Abstraction layer for storing and retrieving metrics. Hides backend details.",
           "documentation" : { },
-          "id" : "28",
+          "id" : "36",
           "name" : "Metrics Repository",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.storage.metrics_repository"
           },
           "relationships" : [ {
             "description" : "Uses",
-            "destinationId" : "29",
-            "id" : "90",
-            "sourceId" : "28",
+            "destinationId" : "37",
+            "id" : "100",
+            "sourceId" : "36",
             "tags" : "Relationship"
           }, {
             "description" : "Uses",
-            "destinationId" : "30",
-            "id" : "91",
-            "sourceId" : "28",
+            "destinationId" : "38",
+            "id" : "101",
+            "sourceId" : "36",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
@@ -615,7 +724,7 @@
         }, {
           "description" : "Handles preprocessing of metrics before writing and post-processing after reading (e.g., normalization, filtering).",
           "documentation" : { },
-          "id" : "29",
+          "id" : "37",
           "name" : "Time-Series Processor",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.storage.time_series_processor"
@@ -625,53 +734,69 @@
         }, {
           "description" : "Manages different storage backends and their configurations.",
           "documentation" : { },
-          "id" : "30",
+          "id" : "38",
           "name" : "Storage Backend Manager",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.storage.storage_manager"
           },
           "relationships" : [ {
             "description" : "Uses",
-            "destinationId" : "31",
-            "id" : "92",
-            "sourceId" : "30",
+            "destinationId" : "39",
+            "id" : "102",
+            "sourceId" : "38",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
           "technology" : "Python"
         }, {
-          "description" : "Handles connection and queries to the VictoriaMetrics backend.",
+          "description" : "Abstract contract implemented by all storage backends.",
           "documentation" : { },
-          "id" : "31",
-          "name" : "VictoriaMetrics Client",
+          "id" : "39",
+          "name" : "Storage Backend Interface",
           "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.storage.victoriametrics_client"
+            "structurizr.dsl.identifier" : "wattnet.storage.storage_backend_interface"
+          },
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Handles connection and queries to the ClickHouse backend.",
+          "documentation" : { },
+          "id" : "40",
+          "name" : "ClickHouse Client",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.storage.clickhouse_client"
           },
           "relationships" : [ {
+            "description" : "Implements",
+            "destinationId" : "39",
+            "id" : "103",
+            "sourceId" : "40",
+            "tags" : "Relationship"
+          }, {
             "description" : "Reads / Writes",
-            "destinationId" : "32",
-            "id" : "93",
-            "sourceId" : "31",
+            "destinationId" : "41",
+            "id" : "104",
+            "sourceId" : "40",
             "tags" : "Relationship",
-            "technology" : "PromQL"
+            "technology" : "SQL"
           } ],
           "tags" : "Element,Component",
-          "technology" : "Python / PromQL"
+          "technology" : "Python / SQL"
         }, {
-          "description" : "Time-series database for storing and querying metrics.",
+          "description" : "Open-source column-oriented DBMS (columnar database management system) for online analytical processing (OLAP)",
           "documentation" : { },
-          "id" : "32",
-          "name" : "VictoriaMetrics",
+          "id" : "41",
+          "name" : "ClickHouse",
           "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.storage.victoriametrics"
+            "structurizr.dsl.identifier" : "wattnet.storage.clickhouse"
           },
           "tags" : "Element,Component",
-          "technology" : "Docker: victoriametrics/victoria-metrics"
+          "technology" : "Docker: clickhouse/clickhouse-server"
         } ],
         "description" : "System for storing and retrieving time-series metrics data.",
         "documentation" : { },
         "group" : "Backend",
-        "id" : "27",
+        "id" : "35",
         "name" : "Metrics Storage",
         "properties" : {
           "structurizr.dsl.identifier" : "wattnet.storage"
@@ -679,42 +804,19 @@
         "tags" : "Element,Container",
         "technology" : "Python + Docker"
       }, {
-        "description" : "Carbon Neutrality in the UNECE Region: Integrated Life-cycle Assessment of Electricity Sources.",
-        "documentation" : { },
-        "group" : "Backend",
-        "id" : "33",
-        "name" : "Impacts Database",
-        "properties" : {
-          "structurizr.dsl.identifier" : "wattnet.impacts_db"
-        },
-        "tags" : "Element,Container,Repository",
-        "technology" : "Directory with YAML Files"
-      }, {
         "components" : [ {
           "description" : "Manages the workflow of the forecast engine.",
           "documentation" : { },
-          "id" : "35",
+          "id" : "43",
           "name" : "Workflow Manager",
           "properties" : {
             "structurizr.dsl.identifier" : "wattnet.forecast_engine.manager"
           },
           "relationships" : [ {
             "description" : "Uses",
-            "destinationId" : "36",
-            "id" : "103",
-            "sourceId" : "35",
-            "tags" : "Relationship"
-          }, {
-            "description" : "Uses",
-            "destinationId" : "38",
-            "id" : "104",
-            "sourceId" : "35",
-            "tags" : "Relationship"
-          }, {
-            "description" : "Generates/Reads",
-            "destinationId" : "37",
-            "id" : "105",
-            "sourceId" : "35",
+            "destinationId" : "45",
+            "id" : "109",
+            "sourceId" : "43",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
@@ -722,204 +824,203 @@
         }, {
           "description" : "Reads metrics from storage and writes forecasted values back to the Metrics Repository.",
           "documentation" : { },
-          "id" : "36",
-          "name" : "Metrics Repository Adapter",
+          "id" : "44",
+          "name" : "Storage Manager",
           "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.forecast_engine.metrics_repository_adapter"
+            "structurizr.dsl.identifier" : "wattnet.forecast_engine.storage_manager"
           },
           "relationships" : [ {
             "description" : "Reads / Writes",
-            "destinationId" : "28",
-            "id" : "106",
-            "sourceId" : "36",
+            "destinationId" : "36",
+            "id" : "110",
+            "sourceId" : "44",
             "tags" : "Relationship"
           }, {
             "description" : "Reads / Writes",
-            "destinationId" : "27",
-            "id" : "107",
-            "linkedRelationshipId" : "106",
-            "sourceId" : "36"
+            "destinationId" : "35",
+            "id" : "111",
+            "linkedRelationshipId" : "110",
+            "sourceId" : "44"
           } ],
           "tags" : "Element,Component",
           "technology" : "Python"
         }, {
-          "description" : "Long Short-Term Memory model for environmental footprint time-series data forecasting.",
+          "description" : "Orchestrates the forecasting process, including data retrieval, and model execution.",
           "documentation" : { },
-          "id" : "37",
-          "name" : "LSTM Model",
+          "id" : "45",
+          "name" : "Forecast Manager",
           "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.forecast_engine.lstm"
+            "structurizr.dsl.identifier" : "wattnet.forecast_engine.forecast_manager"
           },
-          "tags" : "Element,Component,Model",
+          "relationships" : [ {
+            "description" : "Reads",
+            "destinationId" : "50",
+            "id" : "114",
+            "sourceId" : "45",
+            "tags" : "Relationship",
+            "technology" : "YAML Files"
+          }, {
+            "description" : "Uses",
+            "destinationId" : "44",
+            "id" : "116",
+            "sourceId" : "45",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Uses",
+            "destinationId" : "46",
+            "id" : "117",
+            "sourceId" : "45",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Uses",
+            "destinationId" : "47",
+            "id" : "119",
+            "sourceId" : "45",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
           "technology" : "Python"
         }, {
-          "description" : "Detects data drift in time-series data to ensure model accuracy.",
+          "description" : "Collects and manages lag data for predictive modeling in time-series data.",
           "documentation" : { },
-          "id" : "38",
-          "name" : "Drift Detector",
+          "id" : "46",
+          "name" : "Lag Collector",
           "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.forecast_engine.drift_detector"
+            "structurizr.dsl.identifier" : "wattnet.forecast_engine.lag_collector"
           },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "44",
+            "id" : "118",
+            "sourceId" : "46",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Abstract contract implemented by all predictive models.",
+          "documentation" : { },
+          "id" : "47",
+          "name" : "Predictor Interface",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.forecast_engine.predictor_interface"
+          },
+          "tags" : "Element,Component",
+          "technology" : "Python"
+        }, {
+          "description" : "Predictive model that uses auto-regressive techniques to forecast future metrics based on historical data.",
+          "documentation" : { },
+          "id" : "48",
+          "name" : "Auto-Regressive Predictor",
+          "properties" : {
+            "structurizr.dsl.identifier" : "wattnet.forecast_engine.auto_regressive_predictor"
+          },
+          "relationships" : [ {
+            "description" : "Implements",
+            "destinationId" : "47",
+            "id" : "120",
+            "sourceId" : "48",
+            "tags" : "Relationship"
+          } ],
           "tags" : "Element,Component",
           "technology" : "Python"
         } ],
         "description" : "Forecasts short-term future environmental impact metrics based on historical data.",
         "documentation" : { },
         "group" : "Backend",
-        "id" : "34",
+        "id" : "42",
         "name" : "Forecast Engine",
         "properties" : {
           "structurizr.dsl.identifier" : "wattnet.forecast_engine"
         },
         "relationships" : [ {
           "description" : "Reads / Writes",
-          "destinationId" : "28",
-          "id" : "108",
-          "linkedRelationshipId" : "106",
-          "sourceId" : "34"
+          "destinationId" : "36",
+          "id" : "112",
+          "linkedRelationshipId" : "110",
+          "sourceId" : "42"
         }, {
           "description" : "Reads / Writes",
-          "destinationId" : "27",
-          "id" : "109",
-          "linkedRelationshipId" : "106",
-          "sourceId" : "34"
+          "destinationId" : "35",
+          "id" : "113",
+          "linkedRelationshipId" : "110",
+          "sourceId" : "42"
+        }, {
+          "description" : "Reads",
+          "destinationId" : "50",
+          "id" : "115",
+          "linkedRelationshipId" : "114",
+          "sourceId" : "42",
+          "technology" : "YAML Files"
         } ],
         "tags" : "Element,Container",
         "technology" : "Python"
       }, {
-        "components" : [ {
-          "description" : "Manages the workflow of the inference engine.",
-          "documentation" : { },
-          "id" : "40",
-          "name" : "Workflow Manager",
-          "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.inference_engine.manager"
-          },
-          "relationships" : [ {
-            "description" : "Uses",
-            "destinationId" : "41",
-            "id" : "96",
-            "sourceId" : "40",
-            "tags" : "Relationship"
-          }, {
-            "description" : "Uses",
-            "destinationId" : "43",
-            "id" : "97",
-            "sourceId" : "40",
-            "tags" : "Relationship"
-          }, {
-            "description" : "Generates",
-            "destinationId" : "42",
-            "id" : "98",
-            "sourceId" : "40",
-            "tags" : "Relationship"
-          } ],
-          "tags" : "Element,Component",
-          "technology" : "Python"
-        }, {
-          "description" : "Reads metrics from storage for model training and inference.",
-          "documentation" : { },
-          "id" : "41",
-          "name" : "Metrics Repository Reader",
-          "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.inference_engine.repository_reader"
-          },
-          "relationships" : [ {
-            "description" : "Reads",
-            "destinationId" : "28",
-            "id" : "99",
-            "sourceId" : "41",
-            "tags" : "Relationship"
-          }, {
-            "description" : "Reads",
-            "destinationId" : "27",
-            "id" : "100",
-            "linkedRelationshipId" : "99",
-            "sourceId" : "41"
-          } ],
-          "tags" : "Element,Component",
-          "technology" : "Python"
-        }, {
-          "description" : "Machine learning model for inferring missing data points in time-series data.",
-          "documentation" : { },
-          "id" : "42",
-          "name" : "Extrapolation Model",
-          "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.inference_engine.extrapolation_model"
-          },
-          "tags" : "Element,Component,Model",
-          "technology" : "Python"
-        }, {
-          "description" : "Detects data drift in time-series data to ensure model accuracy.",
-          "documentation" : { },
-          "id" : "43",
-          "name" : "Drift Detector",
-          "properties" : {
-            "structurizr.dsl.identifier" : "wattnet.inference_engine.drift_detector"
-          },
-          "tags" : "Element,Component",
-          "technology" : "Python"
-        } ],
-        "description" : "Trains and applies machine learning models to fill in missing raw data points.",
+        "description" : "Carbon Neutrality in the UNECE Region: Integrated Life-cycle Assessment of Electricity Sources.",
         "documentation" : { },
         "group" : "Backend",
-        "id" : "39",
-        "name" : "Inference Engine",
+        "id" : "49",
+        "name" : "Impacts Database",
         "properties" : {
-          "structurizr.dsl.identifier" : "wattnet.inference_engine"
+          "structurizr.dsl.identifier" : "wattnet.impacts_db"
         },
-        "relationships" : [ {
-          "description" : "Reads",
-          "destinationId" : "28",
-          "id" : "101",
-          "linkedRelationshipId" : "99",
-          "sourceId" : "39"
-        }, {
-          "description" : "Reads",
-          "destinationId" : "27",
-          "id" : "102",
-          "linkedRelationshipId" : "99",
-          "sourceId" : "39"
-        } ],
-        "tags" : "Element,Container",
-        "technology" : "Python"
+        "tags" : "Element,Container,Repository",
+        "technology" : "Directory with YAML Files"
+      }, {
+        "description" : "Specify zones along with their EIC codes, data providers, and cross-border interconnections.",
+        "documentation" : { },
+        "group" : "Backend",
+        "id" : "50",
+        "name" : "Zones Definition",
+        "properties" : {
+          "structurizr.dsl.identifier" : "wattnet.zones_definition"
+        },
+        "tags" : "Element,Container,Repository",
+        "technology" : "Directory with YAML Files"
       } ],
       "description" : "An open-source service for tracking the environmental footprint of electricity across Europe.",
       "documentation" : { },
-      "id" : "4",
+      "id" : "5",
       "location" : "Unspecified",
       "name" : "wattnet",
       "properties" : {
         "structurizr.dsl.identifier" : "wattnet"
       },
       "relationships" : [ {
-        "description" : "Request",
+        "description" : "Request Data",
         "destinationId" : "3",
-        "id" : "78",
-        "linkedRelationshipId" : "76",
-        "sourceId" : "4",
-        "technology" : "entsoe.eu/api"
+        "id" : "86",
+        "linkedRelationshipId" : "84",
+        "sourceId" : "5",
+        "technology" : "web-api.tp.entsoe.eu/api"
+      }, {
+        "description" : "Request Data",
+        "destinationId" : "4",
+        "id" : "89",
+        "linkedRelationshipId" : "87",
+        "sourceId" : "5",
+        "technology" : "data.elexon.co.uk/bmrs/api/v1"
       } ],
       "tags" : "Element,Software System"
     } ]
   },
   "name" : "wattnet",
   "properties" : {
-    "structurizr.dsl" : "d29ya3NwYWNlICJ3YXR0bmV0IiAiQW4gb3Blbi1zb3VyY2Ugc2VydmljZSBmb3IgdHJhY2tpbmcgdGhlIGVudmlyb25tZW50YWwgZm9vdHByaW50IG9mIGVsZWN0cmljaXR5IGFjcm9zcyBFdXJvcGUuIiB7CgogICAgIWlkZW50aWZpZXJzIGhpZXJhcmNoaWNhbAoKICAgICMgTW9kZWwKCiAgICBtb2RlbCB7CgogICAgICAgIHByb3BlcnRpZXMgewogICAgICAgICAgICBzdHJ1Y3R1cml6ci5ncm91cFNlcGFyYXRvciAvCiAgICAgICAgfQoKICAgICAgICB1c2VyID0gcGVyc29uICJVc2VyIiAiQW4gaW5kaXZpZHVhbCB3aG8gYWNjZXNzZXMgYW5kIGFuYWx5emVzIGVudmlyb25tZW50YWwgaW1wYWN0IGRhdGEgdGhyb3VnaCB3YXR0bmV0LiIKCiAgICAgICAgZXh0ZXJuYWxfY29uc3VtZXIgPSBzb2Z0d2FyZVN5c3RlbSAiRXh0ZXJuYWwgQ29uc3VtZXIiICJBIHRoaXJkLXBhcnR5IHN5c3RlbSBvciBzZXJ2aWNlIHRoYXQgY29ubmVjdHMgdG8gd2F0dG5ldCB0byByZXRyaWV2ZSBhbmQgdXNlIGVudmlyb25tZW50YWwgaW1wYWN0IGRhdGEuIiAiRXh0ZXJuYWwiIHsKICAgICAgICB9CgogICAgICAgIGVudHNvZV9hcGkgPSBzb2Z0d2FyZVN5c3RlbSAiRU5UU08tRSBQdWJsaWMgQVBJIiAiRXVyb3BlYW4gTmV0d29yayBvZiBUcmFuc21pc3Npb24gU3lzdGVtIE9wZXJhdG9ycyBmb3IgRWxlY3RyaWNpdHkgUkVTVGZ1bCBBUEkuIiAiRXh0ZXJuYWwiIHsKICAgICAgICB9CgogICAgICAgIHdhdHRuZXQgPSBzb2Z0d2FyZVN5c3RlbSAid2F0dG5ldCIgIkFuIG9wZW4tc291cmNlIHNlcnZpY2UgZm9yIHRyYWNraW5nIHRoZSBlbnZpcm9ubWVudGFsIGZvb3RwcmludCBvZiBlbGVjdHJpY2l0eSBhY3Jvc3MgRXVyb3BlLiIgewoKICAgICAgICAgICAgZnJvbnRlbmQgPSBncm91cCAiRnJvbnRlbmQiIHsKICAgICAgICAgICAgICAgIGRhc2hib2FyZCA9IGNvbnRhaW5lciAiRGFzaGJvYXJkIiAiIFRoZSBkYXNoYm9hcmQgbGV0cyB5b3UgZXhwbG9yZSBhbGwgbWV0cmljcyBpbiBhIGNsZWFyLCBpbnRlcmFjdGl2ZSwgYW5kIHZpc3VhbGx5IGVuZ2FnaW5nIGludGVyZmFjZS4gIiAiQW5ndWxhciIgIkRhc2hib2FyZCIgewogICAgICAgICAgICAgICAgICAgIHNlcnZpY2UgPSBjb21wb25lbnQgIlNlcnZpY2UiICJTZXJ2aWNlIGRlc2NyaXB0aW9uLiIKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBncmFmYW5hID0gY29udGFpbmVyICJHcmFmYW5hIiAiTWV0cmljcyB2aXN1YWxpemF0aW9uIGFuZCBcbiBtb25pdG9yaW5nIGRhc2hib2FyZHMuIFxuIE9ubHkgZm9yIG1vbml0b3JpbmcuIiAiRG9ja2VyOiBncmFmYW5hL2dyYWZhbmEiICJEYXNoYm9hcmQvTW9uaXRvciJ7CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGJhY2tlbmQgPSBncm91cCAgIkJhY2tlbmQiIHsKCiAgICAgICAgICAgICAgICBhcGkgPSBjb250YWluZXIgIlJFU1RmdWwgQVBJIiAiUHJvdmlkZXMgYSBzdGF0ZWxlc3Mgc3RhbmRhcmQgaW50ZXJmYWNlIGZvciBhY2Nlc3NpbmcgZW52aXJvbm1lbnRhbCBpbXBhY3QgbWV0cmljcy4iICJGYXN0QVBJIiB7CgogICAgICAgICAgICAgICAgICAgIHJ1bm5lciA9IGNvbXBvbmVudCAiQVBJIFJ1bm5lciIgIkluaXRpYWxpemVzIHRoZSBGYXN0QVBJIHNlcnZlciBhbmQgbWFuYWdlcyB0aGUgQVBJIGxpZmVjeWNsZS4iICJQeXRob24gLyBVdmljb3JuIgoKICAgICAgICAgICAgICAgICAgICB2MSA9IGdyb3VwICJ2MSIgewoKICAgICAgICAgICAgICAgICAgICAgICAgZm9vdHByaW50X2NvbnRyb2xsZXIgPSBjb21wb25lbnQgIkZvb3RwcmludCBDb250cm9sbGVyIiAiSGFuZGxlcyByZXF1ZXN0cyByZWxhdGVkIHRvIGVudmlyb25tZW50YWwgaW1wYWN0IG1ldHJpY3MuIiAiUHl0aG9uIC8gRmFzdEFQSSIKCiAgICAgICAgICAgICAgICAgICAgICAgIGZhY3Rvcl9jb250cm9sbGVyID0gY29tcG9uZW50ICJGYWN0b3IgQ29udHJvbGxlciIgIkhhbmRsZXMgcmVxdWVzdHMgcmVsYXRlZCB0byBlbnZpcm9ubWVudGFsIGltcGFjdCBmYWN0b3JzLiIgIlB5dGhvbiAvIEZhc3RBUEkiCiAgICAgICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICAgICBmb290cHJpbnRfc2VydmljZSA9IGNvbXBvbmVudCAiRm9vdHByaW50IFNlcnZpY2UiICJSZWFkcyBlbnZpcm9ubWVudGFsIGltcGFjdCBtZXRyaWNzIGZyb20gdGhlIG1ldHJpY3Mgc3RvcmFnZS4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIGZhY3Rvcl9zZXJ2aWNlID0gY29tcG9uZW50ICJGYWN0b3IgU2VydmljZSIgIlJlYWRzIGVudmlyb25tZW50YWwgaW1wYWN0IGZhY3RvcnMgZnJvbSB0aGUgbWV0cmljcyBzdG9yYWdlLiIgIlB5dGhvbiIKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBjb3JlX2VuZ2luZSA9IGNvbnRhaW5lciAiQ29yZSBFbmdpbmUiICJGZXRjaCBhbmQgcHJvY2Vzc2VzIGVsZWN0cmljaXR5IGdlbmVyYXRpb24gZGF0YSB0byBjb21wdXRlIGVudmlyb25tZW50YWwgaW1wYWN0IG1ldHJpY3MuIiAiUHl0aG9uIiB7CgogICAgICAgICAgICAgICAgICAgIG1hbmFnZXIgPSBjb21wb25lbnQgIldvcmtmbG93IE1hbmFnZXIiICJNYW5hZ2VzIHRoZSB3b3JrZmxvdyBvZiB0aGUgbWV0cmljcyBlbmdpbmUuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBlbnRzb2VfY2xpZW50ID0gY29tcG9uZW50ICJFTlRTTy1FIENsaWVudCIgIlByb3ZpZGVzIGFuIGludGVyZmFjZSB0aGF0IHJldHJpZXZlcyBhbmQgcHJvY2Vzc2VzIGVsZWN0cmljaXR5IG1hcmtldCBhbmQgcG93ZXIgZ3JpZCBkYXRhIGZyb20gRU5UU08tRS4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIGZhY3RvcnNfcmVhZGVyID0gY29tcG9uZW50ICJGYWN0b3JzIFJlYWRlciIgIlJlYWRzIGVudmlyb25tZW50YWwgaW1wYWN0IGZhY3RvcnMgZnJvbSBZQU1MIGZpbGVzLiIgIlB5dGhvbiIKCiAgICAgICAgICAgICAgICAgICAgbWFwX2J1aWxkZXIgPSBjb21wb25lbnQgIk1hcCBCdWlsZGVyIiAiR2VuZXJhdGVzIHRoZSBlbGVjdHJpY2FsIGVuZXJneSBtYXAgYWNjb3JkaW5nIHpvbmVzIGRlZmluaXRpb24gYW5kIEVOVFNPLUUgbWV0cmljcy4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIGltcGFjdHNfY2FsY3VsYXRvciA9IGNvbXBvbmVudCAiSW1wYWN0cyBDYWxjdWxhdG9yIiAiQ29tcHV0ZXMgZWxlY3RyaWNhbCBlbmVyZ3kgZG93bnN0cmVhbSBjb21wb3NpdGlvbiBtYXRyaXggYW5kIGVudmlyb25tZW50YWwgaW1wYWN0IG1ldHJpY3MuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBmbG93dHJhY2luZyA9IGNvbXBvbmVudCAiRmxvdy1UcmFjaW5nIEFsZ29yaXRobSIgIkNvbXB1dGVzIGVsZWN0cmljYWwgZW5lcmd5IHVwc3RyZWFtIGRpc3RyaWJ1dGlvbiBtYXRyaXggdXNpbmcgYSBmbG93LXRyYWNpbmcgYXBwcm9hY2guIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICB6b25lX21hbmFnZXIgPSBjb21wb25lbnQgIlpvbmUgTWFuYWdlciIgIkhhbmRsZXMgdGhlIHpvbmVzIG9mIHRoZSBlbGVjdHJpY2FsIGVuZXJneSBtYXAsIGFsb25nIHdpdGggdGhlaXIgYXR0cmlidXRlcyBhbmQgc3RhdHVzLiIgIlB5dGhvbiIKCiAgICAgICAgICAgICAgICAgICAgem9uZXNfZGVmaW5pdGlvbiA9IGNvbXBvbmVudCAiWm9uZXMgRGVmaW5pdGlvbiIgIlNwZWNpZnkgem9uZXMgYWxvbmcgd2l0aCB0aGVpciBFSUMgY29kZXMsIGRhdGEgcHJvdmlkZXJzLCBhbmQgY3Jvc3MtYm9yZGVyIGludGVyY29ubmVjdGlvbnMuIiAiRGlyZWN0b3J5IHdpdGggWUFNTCBGaWxlcyIgIlJlcG9zaXRvcnkiCgogICAgICAgICAgICAgICAgICAgIHByb3ZpZGVyX2Nvbm5lY3RvciA9IGNvbXBvbmVudCAiUHJvdmlkZXIgQ29ubmVjdG9yIiAiUGx1Zy1pbiBzeXN0ZW0gdG8gY29ubmVjdCB0byBkaWZmZXJlbnQgZWxlY3RyaWNhbCBlbmVyZ3kgcHJvdmlkZXIgY2xpZW50cy4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIHdyaXRlcl9tYW5hZ2VyID0gY29tcG9uZW50ICJXcml0ZXIgTWFuYWdlciIgIkhhbmRsZXMgd3JpdGluZyBvZiBjb21wdXRlZCBtZXRyaWNzIHRvIHRoZSBtZXRyaWNzIHN0b3JhZ2UuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBpbnRlcnBvbGF0b3IgPSBjb21wb25lbnQgIkRhdGEgSW50ZXJwb2xhdG9yIiAiTGV2ZXJhZ2VzIEFJLWRyaXZlbiBzZWxmLXRyYWluZWQgbW9kZWxzIHRvIGludGVsbGlnZW50bHkgaW5mZXIgbWlzc2luZyBwb2ludHMgb24gZGF0YSBzZXJpZXMuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBvdXRsaWVyX2RldGVjdG9yID0gY29tcG9uZW50ICJPdXRsaWVyIERldGVjdG9yIiAiRGV0ZWN0cyBvdXRsaWVycyBpbiB0aW1lLXNlcmllcyBkYXRhIHRvIGVuc3VyZSBkYXRhIHF1YWxpdHkuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBzdG9yYWdlID0gY29udGFpbmVyICJNZXRyaWNzIFN0b3JhZ2UiICJTeXN0ZW0gZm9yIHN0b3JpbmcgYW5kIHJldHJpZXZpbmcgdGltZS1zZXJpZXMgbWV0cmljcyBkYXRhLiIgIlB5dGhvbiArIERvY2tlciIgewoKICAgICAgICAgICAgICAgICAgICBtZXRyaWNzX3JlcG9zaXRvcnkgPSBjb21wb25lbnQgIk1ldHJpY3MgUmVwb3NpdG9yeSIgIkFic3RyYWN0aW9uIGxheWVyIGZvciBzdG9yaW5nIGFuZCByZXRyaWV2aW5nIG1ldHJpY3MuIEhpZGVzIGJhY2tlbmQgZGV0YWlscy4iICJQeXRob24iCiAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgdGltZV9zZXJpZXNfcHJvY2Vzc29yID0gY29tcG9uZW50ICJUaW1lLVNlcmllcyBQcm9jZXNzb3IiICJIYW5kbGVzIHByZXByb2Nlc3Npbmcgb2YgbWV0cmljcyBiZWZvcmUgd3JpdGluZyBhbmQgcG9zdC1wcm9jZXNzaW5nIGFmdGVyIHJlYWRpbmcgKGUuZy4sIG5vcm1hbGl6YXRpb24sIGZpbHRlcmluZykuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBzdG9yYWdlX21hbmFnZXIgPSBjb21wb25lbnQgIlN0b3JhZ2UgQmFja2VuZCBNYW5hZ2VyIiAiTWFuYWdlcyBkaWZmZXJlbnQgc3RvcmFnZSBiYWNrZW5kcyBhbmQgdGhlaXIgY29uZmlndXJhdGlvbnMuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICB2aWN0b3JpYW1ldHJpY3NfY2xpZW50ID0gY29tcG9uZW50ICJWaWN0b3JpYU1ldHJpY3MgQ2xpZW50IiAiSGFuZGxlcyBjb25uZWN0aW9uIGFuZCBxdWVyaWVzIHRvIHRoZSBWaWN0b3JpYU1ldHJpY3MgYmFja2VuZC4iICJQeXRob24gLyBQcm9tUUwiCgogICAgICAgICAgICAgICAgICAgIHZpY3RvcmlhbWV0cmljcyA9IGNvbXBvbmVudCAiVmljdG9yaWFNZXRyaWNzIiAiVGltZS1zZXJpZXMgZGF0YWJhc2UgZm9yIHN0b3JpbmcgYW5kIHF1ZXJ5aW5nIG1ldHJpY3MuIiAiRG9ja2VyOiB2aWN0b3JpYW1ldHJpY3MvdmljdG9yaWEtbWV0cmljcyIKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBpbXBhY3RzX2RiID0gY29udGFpbmVyICJJbXBhY3RzIERhdGFiYXNlIiAiQ2FyYm9uIE5ldXRyYWxpdHkgaW4gdGhlIFVORUNFIFJlZ2lvbjogSW50ZWdyYXRlZCBMaWZlLWN5Y2xlIEFzc2Vzc21lbnQgb2YgRWxlY3RyaWNpdHkgU291cmNlcy4iICJEaXJlY3Rvcnkgd2l0aCBZQU1MIEZpbGVzIiAiUmVwb3NpdG9yeSIgewogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIGZvcmVjYXN0X2VuZ2luZSA9IGNvbnRhaW5lciAiRm9yZWNhc3QgRW5naW5lIiAiRm9yZWNhc3RzIHNob3J0LXRlcm0gZnV0dXJlIGVudmlyb25tZW50YWwgaW1wYWN0IG1ldHJpY3MgYmFzZWQgb24gaGlzdG9yaWNhbCBkYXRhLiIgIlB5dGhvbiIgewoKICAgICAgICAgICAgICAgICAgICBtYW5hZ2VyID0gY29tcG9uZW50ICJXb3JrZmxvdyBNYW5hZ2VyIiAiTWFuYWdlcyB0aGUgd29ya2Zsb3cgb2YgdGhlIGZvcmVjYXN0IGVuZ2luZS4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIG1ldHJpY3NfcmVwb3NpdG9yeV9hZGFwdGVyID0gY29tcG9uZW50ICJNZXRyaWNzIFJlcG9zaXRvcnkgQWRhcHRlciIgIlJlYWRzIG1ldHJpY3MgZnJvbSBzdG9yYWdlIGFuZCB3cml0ZXMgZm9yZWNhc3RlZCB2YWx1ZXMgYmFjayB0byB0aGUgTWV0cmljcyBSZXBvc2l0b3J5LiIgIlB5dGhvbiIKCiAgICAgICAgICAgICAgICAgICAgbHN0bSA9IGNvbXBvbmVudCAiTFNUTSBNb2RlbCIgIkxvbmcgU2hvcnQtVGVybSBNZW1vcnkgbW9kZWwgZm9yIGVudmlyb25tZW50YWwgZm9vdHByaW50IHRpbWUtc2VyaWVzIGRhdGEgZm9yZWNhc3RpbmcuIiAiUHl0aG9uIiAiTW9kZWwiCgogICAgICAgICAgICAgICAgICAgIGRyaWZ0X2RldGVjdG9yID0gY29tcG9uZW50ICJEcmlmdCBEZXRlY3RvciIgIkRldGVjdHMgZGF0YSBkcmlmdCBpbiB0aW1lLXNlcmllcyBkYXRhIHRvIGVuc3VyZSBtb2RlbCBhY2N1cmFjeS4iICJQeXRob24iCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgaW5mZXJlbmNlX2VuZ2luZSA9IGNvbnRhaW5lciAiSW5mZXJlbmNlIEVuZ2luZSIgIlRyYWlucyBhbmQgYXBwbGllcyBtYWNoaW5lIGxlYXJuaW5nIG1vZGVscyB0byBmaWxsIGluIG1pc3NpbmcgcmF3IGRhdGEgcG9pbnRzLiIgIlB5dGhvbiIgewoKICAgICAgICAgICAgICAgICAgICBtYW5hZ2VyID0gY29tcG9uZW50ICJXb3JrZmxvdyBNYW5hZ2VyIiAiTWFuYWdlcyB0aGUgd29ya2Zsb3cgb2YgdGhlIGluZmVyZW5jZSBlbmdpbmUuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICByZXBvc2l0b3J5X3JlYWRlciA9IGNvbXBvbmVudCAiTWV0cmljcyBSZXBvc2l0b3J5IFJlYWRlciIgIlJlYWRzIG1ldHJpY3MgZnJvbSBzdG9yYWdlIGZvciBtb2RlbCB0cmFpbmluZyBhbmQgaW5mZXJlbmNlLiIgIlB5dGhvbiIKCiAgICAgICAgICAgICAgICAgICAgZXh0cmFwb2xhdGlvbl9tb2RlbCA9IGNvbXBvbmVudCAiRXh0cmFwb2xhdGlvbiBNb2RlbCIgIk1hY2hpbmUgbGVhcm5pbmcgbW9kZWwgZm9yIGluZmVycmluZyBtaXNzaW5nIGRhdGEgcG9pbnRzIGluIHRpbWUtc2VyaWVzIGRhdGEuIiAiUHl0aG9uIiAiTW9kZWwiCgogICAgICAgICAgICAgICAgICAgIGRyaWZ0X2RldGVjdG9yID0gY29tcG9uZW50ICJEcmlmdCBEZXRlY3RvciIgIkRldGVjdHMgZGF0YSBkcmlmdCBpbiB0aW1lLXNlcmllcyBkYXRhIHRvIGVuc3VyZSBtb2RlbCBhY2N1cmFjeS4iICJQeXRob24iCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICB9CgogICAgICAgICMgUmVsYXRpb25zaGlwcwoKICAgICAgICB1c2VyIC0+IHdhdHRuZXQuZGFzaGJvYXJkICJVc2VzIiAiZGFzaGJvYXJkLndhdHRuZXQuZXUiCgogICAgICAgIGV4dGVybmFsX2NvbnN1bWVyIC0+IHdhdHRuZXQuYXBpLnJ1bm5lciAiUmVxdWVzdCIgImFwaS53YXR0bmV0LmV1L3YxIgogICAgICAgIHdhdHRuZXQuZGFzaGJvYXJkLnNlcnZpY2UgLT4gd2F0dG5ldC5hcGkucnVubmVyICJSZXF1ZXN0IiAiYXBpLndhdHRuZXQuZXUvdjEiCgogICAgICAgIHdhdHRuZXQuYXBpLnJ1bm5lciAtPiB3YXR0bmV0LmFwaS5mb290cHJpbnRfY29udHJvbGxlciAiVXNlcyIKICAgICAgICB3YXR0bmV0LmFwaS5ydW5uZXIgLT4gd2F0dG5ldC5hcGkuZmFjdG9yX2NvbnRyb2xsZXIgIlVzZXMiCgogICAgICAgIHdhdHRuZXQuYXBpLmZvb3RwcmludF9jb250cm9sbGVyIC0+IHdhdHRuZXQuYXBpLmZvb3RwcmludF9zZXJ2aWNlICJVc2VzIgogICAgICAgIHdhdHRuZXQuYXBpLmZhY3Rvcl9jb250cm9sbGVyIC0+IHdhdHRuZXQuYXBpLmZhY3Rvcl9zZXJ2aWNlICJVc2VzIgoKICAgICAgICB3YXR0bmV0LmFwaS5mb290cHJpbnRfc2VydmljZSAtPiB3YXR0bmV0LnN0b3JhZ2UubWV0cmljc19yZXBvc2l0b3J5ICJSZWFkcyIgCiAgICAgICAgd2F0dG5ldC5hcGkuZmFjdG9yX3NlcnZpY2UgLT4gd2F0dG5ldC5zdG9yYWdlLm1ldHJpY3NfcmVwb3NpdG9yeSAiUmVhZHMiCgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUubWFuYWdlciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLm1hcF9idWlsZGVyICJVc2VzIiAKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLm1hbmFnZXIgLT4gd2F0dG5ldC5jb3JlX2VuZ2luZS5pbXBhY3RzX2NhbGN1bGF0b3IgIlVzZXMiICAgIAogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUubWFuYWdlciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLndyaXRlcl9tYW5hZ2VyICJVc2VzIgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUud3JpdGVyX21hbmFnZXIgLT4gd2F0dG5ldC5zdG9yYWdlLm1ldHJpY3NfcmVwb3NpdG9yeSAiUmVhZHMgLyBXcml0ZXMiCgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUubWFwX2J1aWxkZXIgLT4gd2F0dG5ldC5jb3JlX2VuZ2luZS5mbG93dHJhY2luZyAiVXNlcyIgCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS5tYXBfYnVpbGRlciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLnpvbmVfbWFuYWdlciAiVXNlcyIgCgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUuem9uZV9tYW5hZ2VyIC0+IHdhdHRuZXQuY29yZV9lbmdpbmUuem9uZXNfZGVmaW5pdGlvbiAiUmVhZHMiICJZQU1MIEZpbGVzIgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUuem9uZV9tYW5hZ2VyIC0+IHdhdHRuZXQuY29yZV9lbmdpbmUucHJvdmlkZXJfY29ubmVjdG9yICJVc2VzIiAKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLnByb3ZpZGVyX2Nvbm5lY3RvciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLmVudHNvZV9jbGllbnQgIkZldGNoIgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUucHJvdmlkZXJfY29ubmVjdG9yIC0+IHdhdHRuZXQuY29yZV9lbmdpbmUuaW50ZXJwb2xhdG9yICJGZXRjaCIgImFzIGEgZmFsbGJhY2siCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS5lbnRzb2VfY2xpZW50IC0+IGVudHNvZV9hcGkgIlJlcXVlc3QiICJlbnRzb2UuZXUvYXBpIiAKCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS5tYXBfYnVpbGRlciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLm91dGxpZXJfZGV0ZWN0b3IgIlVzZXMiCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS5vdXRsaWVyX2RldGVjdG9yIC0+IHdhdHRuZXQuY29yZV9lbmdpbmUud3JpdGVyX21hbmFnZXIgIlVzZXMiCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS5vdXRsaWVyX2RldGVjdG9yIC0+IHdhdHRuZXQuY29yZV9lbmdpbmUuaW50ZXJwb2xhdG9yICJVc2VzIgoKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLmltcGFjdHNfY2FsY3VsYXRvciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLmZhY3RvcnNfcmVhZGVyICJGZXRjaCIKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLmZhY3RvcnNfcmVhZGVyIC0+IHdhdHRuZXQuaW1wYWN0c19kYiAiUmVhZHMiICJZQU1MIEZpbGVzIgoKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLmludGVycG9sYXRvciAtPiB3YXR0bmV0LmluZmVyZW5jZV9lbmdpbmUuZXh0cmFwb2xhdGlvbl9tb2RlbCAiVXNlcyIKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLmludGVycG9sYXRvciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLndyaXRlcl9tYW5hZ2VyICJVc2VzIgogICAgCiAgICAgICAgd2F0dG5ldC5zdG9yYWdlLm1ldHJpY3NfcmVwb3NpdG9yeSAtPiB3YXR0bmV0LnN0b3JhZ2UudGltZV9zZXJpZXNfcHJvY2Vzc29yICJVc2VzIgogICAgICAgIHdhdHRuZXQuc3RvcmFnZS5tZXRyaWNzX3JlcG9zaXRvcnkgLT4gd2F0dG5ldC5zdG9yYWdlLnN0b3JhZ2VfbWFuYWdlciAiVXNlcyIKICAgICAgICB3YXR0bmV0LnN0b3JhZ2Uuc3RvcmFnZV9tYW5hZ2VyIC0+IHdhdHRuZXQuc3RvcmFnZS52aWN0b3JpYW1ldHJpY3NfY2xpZW50ICJVc2VzIgogICAgICAgIHdhdHRuZXQuc3RvcmFnZS52aWN0b3JpYW1ldHJpY3NfY2xpZW50IC0+IHdhdHRuZXQuc3RvcmFnZS52aWN0b3JpYW1ldHJpY3MgIlJlYWRzIC8gV3JpdGVzIiAiUHJvbVFMIgoKICAgICAgICB3YXR0bmV0LmdyYWZhbmEgLT4gd2F0dG5ldC5zdG9yYWdlLnZpY3RvcmlhbWV0cmljcyAiUXVlcmllcyIgIlByb21RTCIKCiAgICAgICAgd2F0dG5ldC5pbmZlcmVuY2VfZW5naW5lLm1hbmFnZXIgLT4gd2F0dG5ldC5pbmZlcmVuY2VfZW5naW5lLnJlcG9zaXRvcnlfcmVhZGVyICJVc2VzIgogICAgICAgIHdhdHRuZXQuaW5mZXJlbmNlX2VuZ2luZS5tYW5hZ2VyIC0+IHdhdHRuZXQuaW5mZXJlbmNlX2VuZ2luZS5kcmlmdF9kZXRlY3RvciAiVXNlcyIKICAgICAgICB3YXR0bmV0LmluZmVyZW5jZV9lbmdpbmUubWFuYWdlciAtPiB3YXR0bmV0LmluZmVyZW5jZV9lbmdpbmUuZXh0cmFwb2xhdGlvbl9tb2RlbCAiR2VuZXJhdGVzIgogICAgICAgIHdhdHRuZXQuaW5mZXJlbmNlX2VuZ2luZS5yZXBvc2l0b3J5X3JlYWRlciAtPiB3YXR0bmV0LnN0b3JhZ2UubWV0cmljc19yZXBvc2l0b3J5ICJSZWFkcyIKCiAgICAgICAgd2F0dG5ldC5mb3JlY2FzdF9lbmdpbmUubWFuYWdlciAtPiB3YXR0bmV0LmZvcmVjYXN0X2VuZ2luZS5tZXRyaWNzX3JlcG9zaXRvcnlfYWRhcHRlciAiVXNlcyIKICAgICAgICB3YXR0bmV0LmZvcmVjYXN0X2VuZ2luZS5tYW5hZ2VyIC0+IHdhdHRuZXQuZm9yZWNhc3RfZW5naW5lLmRyaWZ0X2RldGVjdG9yICJVc2VzIgogICAgICAgIHdhdHRuZXQuZm9yZWNhc3RfZW5naW5lLm1hbmFnZXIgLT4gd2F0dG5ldC5mb3JlY2FzdF9lbmdpbmUubHN0bSAiR2VuZXJhdGVzL1JlYWRzIgogICAgICAgIHdhdHRuZXQuZm9yZWNhc3RfZW5naW5lLm1ldHJpY3NfcmVwb3NpdG9yeV9hZGFwdGVyIC0+IHdhdHRuZXQuc3RvcmFnZS5tZXRyaWNzX3JlcG9zaXRvcnkgIlJlYWRzIC8gV3JpdGVzIiAKCiAgICB9CgogICAgIyBWaWV3cwoKICAgIHZpZXdzIHsKCiAgICAgICAgc3lzdGVtQ29udGV4dCB3YXR0bmV0IHdhdHRuZXRfY29udGV4dCB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIHdhdHRuZXQgd2F0dG5ldF9jb250YWluZXIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICB9CgogICAgICAgIGNvbXBvbmVudCB3YXR0bmV0LmRhc2hib2FyZCB3YXR0bmV0X2Rhc2hib2FyZCB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgIH0KCiAgICAgICAgY29tcG9uZW50IHdhdHRuZXQuYXBpIHdhdHRuZXRfYXBpIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgd2F0dG5ldC5jb3JlX2VuZ2luZSB3YXR0bmV0X2NvcmVfZW5naW5lIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgd2F0dG5ldC5zdG9yYWdlIHdhdHRuZXRfc3RvcmFnZSB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgIH0KCiAgICAgICAgY29tcG9uZW50IHdhdHRuZXQuaW5mZXJlbmNlX2VuZ2luZSB3YXR0bmV0X2luZmVyZW5jZV9lbmdpbmUgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICB9CgogICAgICAgIGNvbXBvbmVudCB3YXR0bmV0LmZvcmVjYXN0X2VuZ2luZSB3YXR0bmV0X2ZvcmVjYXN0X2VuZ2luZSB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgIH0KCiAgICAgICAgYnJhbmRpbmcgewogICAgICAgICAgICBsb2dvICJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vamFpbWVpYi9ob3N0aW5nL3JlZnMvaGVhZHMvbWFpbi93YXR0bmV0LWxvZ28taWNvbi1kYXJrLWJhY2tncm91bmQtcm91bmRlZC5wbmciCiAgICAgICAgICAgIGZvbnQgIlJlZCBIYXQgRGlzcGxheSIgImh0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vY3NzMj9mYW1pbHk9UmVkK0hhdCtEaXNwbGF5OndnaHRANTAwLi45MDAiCiAgICAgICAgfQoKICAgICAgICBzdHlsZXMgewoKICAgICAgICAgICAgZWxlbWVudCAiU29mdHdhcmUgU3lzdGVtIiB7CiAgICAgICAgICAgICAgICBzaGFwZSByb3VuZGVkYm94CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMxRDQ4OEMKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiUGVyc29uIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBwZXJzb24KICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzE0MzI2MgogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJDb250YWluZXIiIHsKICAgICAgICAgICAgICAgIHNoYXBlIHJvdW5kZWRib3gKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzUzNzRBNwogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJDb21wb25lbnQiIHsKICAgICAgICAgICAgICAgIHNoYXBlIHJvdW5kZWRib3gKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzlEQjJEMAogICAgICAgICAgICAgICAgY29sb3IgIzBCMUMzOAogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJHcm91cCIgewogICAgICAgICAgICAgICAgc2hhcGUgcm91bmRlZGJveAogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjOTRDRTI0CiAgICAgICAgICAgICAgICBjb2xvciAjOTRDRTI0CiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIkRhc2hib2FyZCIgewogICAgICAgICAgICAgICAgc2hhcGUgd2ViYnJvd3NlcgogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjNTM3NEE3CiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIkRhc2hib2FyZC9Nb25pdG9yIiB7CiAgICAgICAgICAgICAgICBzaGFwZSB3ZWJicm93c2VyCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM1NTg4ZTYKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiUmVwb3NpdG9yeSIgewogICAgICAgICAgICAgICAgc2hhcGUgZm9sZGVyCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM5NENFMjQKICAgICAgICAgICAgICAgIGNvbG9yICMxNDMyNjIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiRXh0ZXJuYWwiIHsKICAgICAgICAgICAgICAgIHNoYXBlIHJvdW5kZWRib3gKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzBCMUMzOAogICAgICAgICAgICAgICAgY29sb3IgI2U2ZTZlNgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJNb2RlbCIgewogICAgICAgICAgICAgICAgc2hhcGUgZm9sZGVyCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMyZTYzYzIKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KfQ=="
+    "structurizr.dsl" : "d29ya3NwYWNlICJ3YXR0bmV0IiAiQW4gb3Blbi1zb3VyY2Ugc2VydmljZSBmb3IgdHJhY2tpbmcgdGhlIGVudmlyb25tZW50YWwgZm9vdHByaW50IG9mIGVsZWN0cmljaXR5IGFjcm9zcyBFdXJvcGUuIiB7CgogICAgIWlkZW50aWZpZXJzIGhpZXJhcmNoaWNhbAoKICAgICMgTW9kZWwKCiAgICBtb2RlbCB7CgogICAgICAgIHByb3BlcnRpZXMgewogICAgICAgICAgICBzdHJ1Y3R1cml6ci5ncm91cFNlcGFyYXRvciAvCiAgICAgICAgfQoKICAgICAgICB1c2VyID0gcGVyc29uICJVc2VyIiAiQW4gaW5kaXZpZHVhbCB3aG8gYWNjZXNzZXMgYW5kIGFuYWx5emVzIGVudmlyb25tZW50YWwgaW1wYWN0IGRhdGEgdGhyb3VnaCB3YXR0bmV0LiIKCiAgICAgICAgZXh0ZXJuYWxfY29uc3VtZXIgPSBzb2Z0d2FyZVN5c3RlbSAiRXh0ZXJuYWwgQ29uc3VtZXIiICJBIHRoaXJkLXBhcnR5IHN5c3RlbSBvciBzZXJ2aWNlIHRoYXQgY29ubmVjdHMgdG8gd2F0dG5ldCB0byByZXRyaWV2ZSBhbmQgdXNlIGVudmlyb25tZW50YWwgaW1wYWN0IGRhdGEuIiAiRXh0ZXJuYWwiIHsKICAgICAgICB9CgogICAgICAgIGVudHNvZV9hcGkgPSBzb2Z0d2FyZVN5c3RlbSAiRU5UU08tRSBQdWJsaWMgQVBJIiAiRXVyb3BlYW4gTmV0d29yayBvZiBUcmFuc21pc3Npb24gU3lzdGVtIE9wZXJhdG9ycyBmb3IgRWxlY3RyaWNpdHkgUkVTVGZ1bCBBUEkuIiAiRXh0ZXJuYWwiIHsKICAgICAgICB9CgogICAgICAgIGVsZXhvbl9hcGkgPSBzb2Z0d2FyZVN5c3RlbSAiRWxleG9uIEluc2lnaHRzIEFQSSIgIkVsZXhvbiBJbnNpZ2h0cyBSRVNUZnVsIEFQSSBmb3Igb3BlcmF0aW9uYWwgZGF0YSBhYm91dCB0aGUgZWxlY3RyaWNpdHkgc3lzdGVtIGluIEdyZWF0IEJyaXRhaW4uIiAiRXh0ZXJuYWwiIHsKICAgICAgICB9CgogICAgICAgIHdhdHRuZXQgPSBzb2Z0d2FyZVN5c3RlbSAid2F0dG5ldCIgIkFuIG9wZW4tc291cmNlIHNlcnZpY2UgZm9yIHRyYWNraW5nIHRoZSBlbnZpcm9ubWVudGFsIGZvb3RwcmludCBvZiBlbGVjdHJpY2l0eSBhY3Jvc3MgRXVyb3BlLiIgewoKICAgICAgICAgICAgZnJvbnRlbmQgPSBncm91cCAiRnJvbnRlbmQiIHsKICAgICAgICAgICAgICAgIGRhc2hib2FyZCA9IGNvbnRhaW5lciAiRGFzaGJvYXJkIiAiIFRoZSBkYXNoYm9hcmQgbGV0cyB5b3UgZXhwbG9yZSBhbGwgbWV0cmljcyBpbiBhIGNsZWFyLCBpbnRlcmFjdGl2ZSwgYW5kIHZpc3VhbGx5IGVuZ2FnaW5nIGludGVyZmFjZS4gIiAiQW5ndWxhciIgIkRhc2hib2FyZCIgewogICAgICAgICAgICAgICAgICAgIHNlcnZpY2UgPSBjb21wb25lbnQgIlNlcnZpY2UiICJTZXJ2aWNlIGRlc2NyaXB0aW9uLiIKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBncmFmYW5hID0gY29udGFpbmVyICJHcmFmYW5hIiAiTWV0cmljcyB2aXN1YWxpemF0aW9uIGFuZCBcbiBtb25pdG9yaW5nIGRhc2hib2FyZHMuIFxuIE9ubHkgZm9yIG1vbml0b3JpbmcuIiAiRG9ja2VyOiBncmFmYW5hL2dyYWZhbmEiICJEYXNoYm9hcmQvTW9uaXRvciJ7CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgdG9vbHMgPSBjb250YWluZXIgIkRhdGEgVG9vbHMiICJDb21tYW5kLWxpbmUgdG9vbHMgZm9yIGRhdGFzZXQgZXh0cmFjdG9yLCBhbmFseXplciwgYW5kIHZpc3VhbGl6ZXIuIiAiUHl0aG9uIiAiRGFzaGJvYXJkL01vbml0b3IiewogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CgogICAgICAgICAgICBiYWNrZW5kID0gZ3JvdXAgICJCYWNrZW5kIiB7CgogICAgICAgICAgICAgICAgYXBpID0gY29udGFpbmVyICJSRVNUZnVsIEFQSSIgIlByb3ZpZGVzIGEgc3RhdGVsZXNzIHN0YW5kYXJkIGludGVyZmFjZSBmb3IgYWNjZXNzaW5nIGVudmlyb25tZW50YWwgaW1wYWN0IG1ldHJpY3MuIiAiRmFzdEFQSSIgewoKICAgICAgICAgICAgICAgICAgICBydW5uZXIgPSBjb21wb25lbnQgIkFQSSBSdW5uZXIiICJJbml0aWFsaXplcyB0aGUgRmFzdEFQSSBzZXJ2ZXIgYW5kIG1hbmFnZXMgdGhlIEFQSSBsaWZlY3ljbGUuIiAiUHl0aG9uIC8gVXZpY29ybiIKCiAgICAgICAgICAgICAgICAgICAgdjEgPSBncm91cCAidjEiIHsKCiAgICAgICAgICAgICAgICAgICAgICAgIG1ldHJpY19jb250cm9sbGVyID0gY29tcG9uZW50ICJHZW5lcmljIE1ldHJpYyBDb250cm9sbGVyIiAiSGFuZGxlcyByZXF1ZXN0cyByZWxhdGVkIHRvIHN5c3RlbSBkb21haW4gbWV0cmljcywgc3VjaCBhcyBnZW5lcmF0aW9uLCBpbXBvcnQsIGV4cG9ydCwgZm9vdHByaW50LCBmbG93IHNoYXJlLCBtaXggc2hhcmUsIGZvb3RwcmludCBzaGFyZSBhbmQgZmFjdG9ycy4iICJQeXRob24gLyBGYXN0QVBJIgogICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgIG1ldHJpY3Nfc2VydmljZSA9IGNvbXBvbmVudCAiR2VuZXJpYyBNZXRyaWMgU2VydmljZSIgIkNvbnRhaW5zIHRoZSBidXNpbmVzcyBsb2dpYyBmb3IgcHJvY2Vzc2luZyBhbmQgcmV0cmlldmluZyBlbnZpcm9ubWVudGFsIGltcGFjdCBtZXRyaWNzLiIgIlB5dGhvbiIKCiAgICAgICAgICAgICAgICAgICAgZ2VvX3NlcnZpY2UgPSBjb21wb25lbnQgIkdlbyBTZXJ2aWNlIiAiUHJvdmlkZXMgZ2VvZ3JhcGhpY2FsIGRhdGEgYW5kIHV0aWxpdGllcyByZWxhdGVkIHRvIGxhdGl0dWRlcywgbG9uZ2l0dWRlcywgYW5kIHpvbmUgbWFwcGluZy4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIG9wZXJhdGlvbnNfc2VydmljZSA9IGNvbXBvbmVudCAiT3BlcmF0aW9ucyBTZXJ2aWNlIiAiUHJvdmlkZXMgdXRpbGl0aWVzIGZvciBwZXJmb3JtaW5nIG9wZXJhdGlvbnMgb24gdGltZS1zZXJpZXMgZGF0YSwgc3VjaCBhcyBhZ2dyZWdhdGlvbiwgZmlsdGVyaW5nLCBhbmQgbm9ybWFsaXphdGlvbi4iICJQeXRob24iCgogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIGNvcmVfZW5naW5lID0gY29udGFpbmVyICJDb3JlIEVuZ2luZSIgIkZldGNoIGFuZCBwcm9jZXNzZXMgZWxlY3RyaWNpdHkgZ2VuZXJhdGlvbiBkYXRhIHRvIGNvbXB1dGUgZW52aXJvbm1lbnRhbCBpbXBhY3QgbWV0cmljcy4iICJQeXRob24iIHsKCiAgICAgICAgICAgICAgICAgICAgbWFuYWdlciA9IGNvbXBvbmVudCAiV29ya2Zsb3cgTWFuYWdlciIgIk1hbmFnZXMgdGhlIHdvcmtmbG93IG9mIHRoZSBtZXRyaWNzIGVuZ2luZS4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIGZhY3RvcnNfcmVhZGVyID0gY29tcG9uZW50ICJGYWN0b3JzIFJlYWRlciIgIlJlYWRzIGVudmlyb25tZW50YWwgaW1wYWN0IGZhY3RvcnMgZnJvbSBZQU1MIGZpbGVzLiIgIlB5dGhvbiIKCiAgICAgICAgICAgICAgICAgICAgbWFwX2J1aWxkZXIgPSBjb21wb25lbnQgIk1hcCBCdWlsZGVyIiAiR2VuZXJhdGVzIHRoZSBlbGVjdHJpY2FsIGVuZXJneSBtYXAgYWNjb3JkaW5nIHpvbmVzIGRlZmluaXRpb24gYW5kIEVOVFNPLUUgbWV0cmljcy4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIG1hcF9wcmludGVyID0gY29tcG9uZW50ICJNYXAgUHJpbnRlciIgIlByaW50cyB0aGUgZWxlY3RyaWNhbCBlbmVyZ3kgbWFwIGluIGEgdmlzdWFsIGZvcm1hdCBmb3IgZGVidWdnaW5nIGFuZCBhbmFseXNpcyBwdXJwb3Nlcy4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIGltcGFjdHNfY2FsY3VsYXRvciA9IGNvbXBvbmVudCAiSW1wYWN0cyBDYWxjdWxhdG9yIiAiQ29tcHV0ZXMgZWxlY3RyaWNhbCBlbmVyZ3kgZG93bnN0cmVhbSBjb21wb3NpdGlvbiBtYXRyaXggYW5kIGVudmlyb25tZW50YWwgaW1wYWN0IG1ldHJpY3MuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBmbG93dHJhY2luZyA9IGNvbXBvbmVudCAiRmxvdy1UcmFjaW5nIEFsZ29yaXRobSIgIkNvbXB1dGVzIGVsZWN0cmljYWwgZW5lcmd5IHVwc3RyZWFtIGRpc3RyaWJ1dGlvbiBtYXRyaXggdXNpbmcgYSBmbG93LXRyYWNpbmcgYXBwcm9hY2guIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICB6b25lX21hbmFnZXIgPSBjb21wb25lbnQgIlpvbmUgTWFuYWdlciIgIkhhbmRsZXMgdGhlIHpvbmVzIG9mIHRoZSBlbGVjdHJpY2FsIGVuZXJneSBtYXAsIGFsb25nIHdpdGggdGhlaXIgYXR0cmlidXRlcyBhbmQgc3RhdHVzLiIgIlB5dGhvbiIKCiAgICAgICAgICAgICAgICAgICAgcHJvdmlkZXJzX21hbmFnZXIgPSBjb21wb25lbnQgIlByb3ZpZGVycyBNYW5hZ2VyIiAiT3JjaGVzdHJhdGVzIHBsdWdnYWJsZSBwcm92aWRlciBpbXBsZW1lbnRhdGlvbnMuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBwcm92aWRlcl9pbnRlcmZhY2UgPSBjb21wb25lbnQgIlByb3ZpZGVyIEludGVyZmFjZSIgIkFic3RyYWN0IGNvbnRyYWN0IGltcGxlbWVudGVkIGJ5IGFsbCBwcm92aWRlcnMuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBlbnRzb2VfY2xpZW50ID0gY29tcG9uZW50ICJFTlRTT0UgUHJvdmlkZXIgQ2xpZW50IiAiUmV0cmlldmVzIGVsZWN0cmljaXR5IGRhdGEgZnJvbSBFTlRTTy1FIEFQSS4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIGVsZXhvbl9jbGllbnQgPSBjb21wb25lbnQgIkVsZXhvbiBQcm92aWRlciBDbGllbnQiICJSZXRyaWV2ZXMgZWxlY3RyaWNpdHkgZGF0YSBmcm9tIEVsZXhvbiBBUEkuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBzdG9yYWdlX21hbmFnZXIgPSBjb21wb25lbnQgIlN0b3JhZ2UgTWFuYWdlciIgIkhhbmRsZXMgd3JpdGluZyBvZiBjb21wdXRlZCBtZXRyaWNzIHRvIHRoZSBtZXRyaWNzIHN0b3JhZ2UuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBvdXRsaWVyX21hbmFnZXIgPSBjb21wb25lbnQgIk91dGxpZXIgTWFuYWdlciIgIk1hbmFnZXMgb3V0bGllciBkZXRlY3Rpb24gYW5kIGhhbmRsaW5nIGluIHRpbWUtc2VyaWVzIGRhdGEuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBsYWdfY29sbGVjdG9yID0gY29tcG9uZW50ICJMYWcgQ29sbGVjdG9yIiAiQ29sbGVjdHMgYW5kIG1hbmFnZXMgbGFnIGRhdGEgZm9yIG91dGxpZXIgZGV0ZWN0aW9uIGluIHRpbWUtc2VyaWVzIGRhdGEuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBvdXRsaWVyX2RldGVjdG9yID0gY29tcG9uZW50ICJPdXRsaWVyIERldGVjdG9yIiAiRGV0ZWN0cyBvdXRsaWVycyBpbiB0aW1lLXNlcmllcyBkYXRhIHRvIGVuc3VyZSBkYXRhIHF1YWxpdHkuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBlc3RpbWF0b3JfbWFuYWdlciA9IGNvbXBvbmVudCAiRXN0aW1hdG9yIE1hbmFnZXIiICJNYW5hZ2VzIGVzdGltYXRpb24gdGVjaG5pcXVlcyBmb3IgaGFuZGxpbmcgbWlzc2luZyBvciBpbmNvbXBsZXRlIGRhdGEuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBlc3RpbWF0b3JfaW50ZXJmYWNlID0gY29tcG9uZW50ICJFc3RpbWF0b3IgSW50ZXJmYWNlIiAiQWJzdHJhY3QgY29udHJhY3QgaW1wbGVtZW50ZWQgYnkgYWxsIGVzdGltYXRpb24gdGVjaG5pcXVlcy4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIGh5YnJpZF9lbmVyZ3lfZXN0aW1hdG9yID0gY29tcG9uZW50ICJIeWJyaWQgRW5lcmd5IEVzdGltYXRvciIgIkNvbWJpbmVzIG11bHRpcGxlIGVzdGltYXRpb24gdGVjaG5pcXVlcyB0byBpbmZlciBtaXNzaW5nIG9yIGluY29tcGxldGUgZGF0YSBwb2ludHMgaW4gdGltZS1zZXJpZXMgZGF0YS4iICJQeXRob24iCgogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIHN0b3JhZ2UgPSBjb250YWluZXIgIk1ldHJpY3MgU3RvcmFnZSIgIlN5c3RlbSBmb3Igc3RvcmluZyBhbmQgcmV0cmlldmluZyB0aW1lLXNlcmllcyBtZXRyaWNzIGRhdGEuIiAiUHl0aG9uICsgRG9ja2VyIiB7CgogICAgICAgICAgICAgICAgICAgIG1ldHJpY3NfcmVwb3NpdG9yeSA9IGNvbXBvbmVudCAiTWV0cmljcyBSZXBvc2l0b3J5IiAiQWJzdHJhY3Rpb24gbGF5ZXIgZm9yIHN0b3JpbmcgYW5kIHJldHJpZXZpbmcgbWV0cmljcy4gSGlkZXMgYmFja2VuZCBkZXRhaWxzLiIgIlB5dGhvbiIKICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICB0aW1lX3Nlcmllc19wcm9jZXNzb3IgPSBjb21wb25lbnQgIlRpbWUtU2VyaWVzIFByb2Nlc3NvciIgIkhhbmRsZXMgcHJlcHJvY2Vzc2luZyBvZiBtZXRyaWNzIGJlZm9yZSB3cml0aW5nIGFuZCBwb3N0LXByb2Nlc3NpbmcgYWZ0ZXIgcmVhZGluZyAoZS5nLiwgbm9ybWFsaXphdGlvbiwgZmlsdGVyaW5nKS4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIHN0b3JhZ2VfbWFuYWdlciA9IGNvbXBvbmVudCAiU3RvcmFnZSBCYWNrZW5kIE1hbmFnZXIiICJNYW5hZ2VzIGRpZmZlcmVudCBzdG9yYWdlIGJhY2tlbmRzIGFuZCB0aGVpciBjb25maWd1cmF0aW9ucy4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIHN0b3JhZ2VfYmFja2VuZF9pbnRlcmZhY2UgPSBjb21wb25lbnQgIlN0b3JhZ2UgQmFja2VuZCBJbnRlcmZhY2UiICJBYnN0cmFjdCBjb250cmFjdCBpbXBsZW1lbnRlZCBieSBhbGwgc3RvcmFnZSBiYWNrZW5kcy4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIGNsaWNraG91c2VfY2xpZW50ID0gY29tcG9uZW50ICJDbGlja0hvdXNlIENsaWVudCIgIkhhbmRsZXMgY29ubmVjdGlvbiBhbmQgcXVlcmllcyB0byB0aGUgQ2xpY2tIb3VzZSBiYWNrZW5kLiIgIlB5dGhvbiAvIFNRTCIKCiAgICAgICAgICAgICAgICAgICAgY2xpY2tob3VzZSA9IGNvbXBvbmVudCAiQ2xpY2tIb3VzZSIgIk9wZW4tc291cmNlIGNvbHVtbi1vcmllbnRlZCBEQk1TIChjb2x1bW5hciBkYXRhYmFzZSBtYW5hZ2VtZW50IHN5c3RlbSkgZm9yIG9ubGluZSBhbmFseXRpY2FsIHByb2Nlc3NpbmcgKE9MQVApIiAiRG9ja2VyOiBjbGlja2hvdXNlL2NsaWNraG91c2Utc2VydmVyIgogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIGZvcmVjYXN0X2VuZ2luZSA9IGNvbnRhaW5lciAiRm9yZWNhc3QgRW5naW5lIiAiRm9yZWNhc3RzIHNob3J0LXRlcm0gZnV0dXJlIGVudmlyb25tZW50YWwgaW1wYWN0IG1ldHJpY3MgYmFzZWQgb24gaGlzdG9yaWNhbCBkYXRhLiIgIlB5dGhvbiIgewoKICAgICAgICAgICAgICAgICAgICBtYW5hZ2VyID0gY29tcG9uZW50ICJXb3JrZmxvdyBNYW5hZ2VyIiAiTWFuYWdlcyB0aGUgd29ya2Zsb3cgb2YgdGhlIGZvcmVjYXN0IGVuZ2luZS4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIHN0b3JhZ2VfbWFuYWdlciA9IGNvbXBvbmVudCAiU3RvcmFnZSBNYW5hZ2VyIiAiUmVhZHMgbWV0cmljcyBmcm9tIHN0b3JhZ2UgYW5kIHdyaXRlcyBmb3JlY2FzdGVkIHZhbHVlcyBiYWNrIHRvIHRoZSBNZXRyaWNzIFJlcG9zaXRvcnkuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBmb3JlY2FzdF9tYW5hZ2VyID0gY29tcG9uZW50ICJGb3JlY2FzdCBNYW5hZ2VyIiAiT3JjaGVzdHJhdGVzIHRoZSBmb3JlY2FzdGluZyBwcm9jZXNzLCBpbmNsdWRpbmcgZGF0YSByZXRyaWV2YWwsIGFuZCBtb2RlbCBleGVjdXRpb24uIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBsYWdfY29sbGVjdG9yID0gY29tcG9uZW50ICJMYWcgQ29sbGVjdG9yIiAiQ29sbGVjdHMgYW5kIG1hbmFnZXMgbGFnIGRhdGEgZm9yIHByZWRpY3RpdmUgbW9kZWxpbmcgaW4gdGltZS1zZXJpZXMgZGF0YS4iICJQeXRob24iCgogICAgICAgICAgICAgICAgICAgIHByZWRpY3Rvcl9pbnRlcmZhY2UgPSBjb21wb25lbnQgIlByZWRpY3RvciBJbnRlcmZhY2UiICJBYnN0cmFjdCBjb250cmFjdCBpbXBsZW1lbnRlZCBieSBhbGwgcHJlZGljdGl2ZSBtb2RlbHMuIiAiUHl0aG9uIgoKICAgICAgICAgICAgICAgICAgICBhdXRvX3JlZ3Jlc3NpdmVfcHJlZGljdG9yID0gY29tcG9uZW50ICJBdXRvLVJlZ3Jlc3NpdmUgUHJlZGljdG9yIiAiUHJlZGljdGl2ZSBtb2RlbCB0aGF0IHVzZXMgYXV0by1yZWdyZXNzaXZlIHRlY2huaXF1ZXMgdG8gZm9yZWNhc3QgZnV0dXJlIG1ldHJpY3MgYmFzZWQgb24gaGlzdG9yaWNhbCBkYXRhLiIgIlB5dGhvbiIKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBpbXBhY3RzX2RiID0gY29udGFpbmVyICJJbXBhY3RzIERhdGFiYXNlIiAiQ2FyYm9uIE5ldXRyYWxpdHkgaW4gdGhlIFVORUNFIFJlZ2lvbjogSW50ZWdyYXRlZCBMaWZlLWN5Y2xlIEFzc2Vzc21lbnQgb2YgRWxlY3RyaWNpdHkgU291cmNlcy4iICJEaXJlY3Rvcnkgd2l0aCBZQU1MIEZpbGVzIiAiUmVwb3NpdG9yeSIgewogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIHpvbmVzX2RlZmluaXRpb24gPSBjb250YWluZXIgIlpvbmVzIERlZmluaXRpb24iICJTcGVjaWZ5IHpvbmVzIGFsb25nIHdpdGggdGhlaXIgRUlDIGNvZGVzLCBkYXRhIHByb3ZpZGVycywgYW5kIGNyb3NzLWJvcmRlciBpbnRlcmNvbm5lY3Rpb25zLiIgIkRpcmVjdG9yeSB3aXRoIFlBTUwgRmlsZXMiICJSZXBvc2l0b3J5IiB7CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICB9CgogICAgICAgICMgUmVsYXRpb25zaGlwcwoKICAgICAgICB1c2VyIC0+IHdhdHRuZXQuZGFzaGJvYXJkICJVc2VzIiAiZGFzaGJvYXJkLndhdHRuZXQuZXUiCgogICAgICAgIGV4dGVybmFsX2NvbnN1bWVyIC0+IHdhdHRuZXQuYXBpLnJ1bm5lciAiUmVxdWVzdCIgImFwaS53YXR0bmV0LmV1L3YxIgogICAgICAgIHdhdHRuZXQuZGFzaGJvYXJkLnNlcnZpY2UgLT4gd2F0dG5ldC5hcGkucnVubmVyICJSZXF1ZXN0IiAiYXBpLndhdHRuZXQuZXUvdjEiCgogICAgICAgIHdhdHRuZXQuYXBpLnJ1bm5lciAtPiB3YXR0bmV0LmFwaS5tZXRyaWNfY29udHJvbGxlciAiUm91dGVzIFJlcXVlc3RzIgogICAgICAgIHdhdHRuZXQuYXBpLm1ldHJpY19jb250cm9sbGVyIC0+IHdhdHRuZXQuYXBpLm1ldHJpY3Nfc2VydmljZSAiVXNlcyIKICAgICAgICB3YXR0bmV0LmFwaS5tZXRyaWNzX3NlcnZpY2UgLT4gd2F0dG5ldC5hcGkuZ2VvX3NlcnZpY2UgIlVzZXMiCiAgICAgICAgd2F0dG5ldC5hcGkubWV0cmljc19zZXJ2aWNlIC0+IHdhdHRuZXQuYXBpLm9wZXJhdGlvbnNfc2VydmljZSAiVXNlcyIKICAgICAgICB3YXR0bmV0LmFwaS5tZXRyaWNzX3NlcnZpY2UgLT4gd2F0dG5ldC5zdG9yYWdlLm1ldHJpY3NfcmVwb3NpdG9yeSAiUmVhZHMiCgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUubWFuYWdlciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLm1hcF9idWlsZGVyICJVc2VzIiAKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLm1hbmFnZXIgLT4gd2F0dG5ldC5jb3JlX2VuZ2luZS5pbXBhY3RzX2NhbGN1bGF0b3IgIlVzZXMiICAgIAogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUubWFuYWdlciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLnN0b3JhZ2VfbWFuYWdlciAiVXNlcyIKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLnN0b3JhZ2VfbWFuYWdlciAtPiB3YXR0bmV0LnN0b3JhZ2UubWV0cmljc19yZXBvc2l0b3J5ICJSZWFkcyAvIFdyaXRlcyIKCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS5tYXBfYnVpbGRlciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLmZsb3d0cmFjaW5nICJVc2VzIiAKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLm1hcF9idWlsZGVyIC0+IHdhdHRuZXQuY29yZV9lbmdpbmUuem9uZV9tYW5hZ2VyICJVc2VzIiAKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLm1hcF9idWlsZGVyIC0+IHdhdHRuZXQuY29yZV9lbmdpbmUubWFwX3ByaW50ZXIgIlVzZXMiCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS56b25lX21hbmFnZXIgLT4gd2F0dG5ldC56b25lc19kZWZpbml0aW9uICJSZWFkcyIgIllBTUwgRmlsZXMiCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS56b25lX21hbmFnZXIgLT4gd2F0dG5ldC5jb3JlX2VuZ2luZS5wcm92aWRlcnNfbWFuYWdlciAiVXNlcyIgCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS5wcm92aWRlcnNfbWFuYWdlciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLnByb3ZpZGVyX2ludGVyZmFjZSAiVXNlcyIKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLmVudHNvZV9jbGllbnQgLT4gd2F0dG5ldC5jb3JlX2VuZ2luZS5wcm92aWRlcl9pbnRlcmZhY2UgIkltcGxlbWVudHMiCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS5lbGV4b25fY2xpZW50IC0+IHdhdHRuZXQuY29yZV9lbmdpbmUucHJvdmlkZXJfaW50ZXJmYWNlICJJbXBsZW1lbnRzIgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUuZW50c29lX2NsaWVudCAtPiBlbnRzb2VfYXBpICJSZXF1ZXN0IERhdGEiICJ3ZWItYXBpLnRwLmVudHNvZS5ldS9hcGkiCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS5lbGV4b25fY2xpZW50IC0+IGVsZXhvbl9hcGkgIlJlcXVlc3QgRGF0YSIgImRhdGEuZWxleG9uLmNvLnVrL2JtcnMvYXBpL3YxIgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUucHJvdmlkZXJzX21hbmFnZXIgLT4gd2F0dG5ldC5jb3JlX2VuZ2luZS5vdXRsaWVyX21hbmFnZXIgIlVzZXMiCgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUub3V0bGllcl9tYW5hZ2VyIC0+IHdhdHRuZXQuY29yZV9lbmdpbmUubGFnX2NvbGxlY3RvciAiVXNlcyIKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLm91dGxpZXJfbWFuYWdlciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLm91dGxpZXJfZGV0ZWN0b3IgIlVzZXMiCiAgICAgICAgd2F0dG5ldC5jb3JlX2VuZ2luZS5sYWdfY29sbGVjdG9yIC0+IHdhdHRuZXQuY29yZV9lbmdpbmUuc3RvcmFnZV9tYW5hZ2VyICJVc2VzIgoKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLm91dGxpZXJfbWFuYWdlciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLmVzdGltYXRvcl9tYW5hZ2VyICJVc2VzIgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUuZXN0aW1hdG9yX21hbmFnZXIgLT4gd2F0dG5ldC5jb3JlX2VuZ2luZS5lc3RpbWF0b3JfaW50ZXJmYWNlICJVc2VzIgogICAgICAgIHdhdHRuZXQuY29yZV9lbmdpbmUuaHlicmlkX2VuZXJneV9lc3RpbWF0b3IgLT4gd2F0dG5ldC5jb3JlX2VuZ2luZS5lc3RpbWF0b3JfaW50ZXJmYWNlICJJbXBsZW1lbnRzIgoKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLmltcGFjdHNfY2FsY3VsYXRvciAtPiB3YXR0bmV0LmNvcmVfZW5naW5lLmZhY3RvcnNfcmVhZGVyICJGZXRjaCIKICAgICAgICB3YXR0bmV0LmNvcmVfZW5naW5lLmZhY3RvcnNfcmVhZGVyIC0+IHdhdHRuZXQuaW1wYWN0c19kYiAiUmVhZHMiICJZQU1MIEZpbGVzIgogICAgCiAgICAgICAgd2F0dG5ldC5zdG9yYWdlLm1ldHJpY3NfcmVwb3NpdG9yeSAtPiB3YXR0bmV0LnN0b3JhZ2UudGltZV9zZXJpZXNfcHJvY2Vzc29yICJVc2VzIgogICAgICAgIHdhdHRuZXQuc3RvcmFnZS5tZXRyaWNzX3JlcG9zaXRvcnkgLT4gd2F0dG5ldC5zdG9yYWdlLnN0b3JhZ2VfbWFuYWdlciAiVXNlcyIKICAgICAgICB3YXR0bmV0LnN0b3JhZ2Uuc3RvcmFnZV9tYW5hZ2VyIC0+IHdhdHRuZXQuc3RvcmFnZS5zdG9yYWdlX2JhY2tlbmRfaW50ZXJmYWNlICJVc2VzIgogICAgICAgIHdhdHRuZXQuc3RvcmFnZS5jbGlja2hvdXNlX2NsaWVudCAtPiB3YXR0bmV0LnN0b3JhZ2Uuc3RvcmFnZV9iYWNrZW5kX2ludGVyZmFjZSAiSW1wbGVtZW50cyIKICAgICAgICB3YXR0bmV0LnN0b3JhZ2UuY2xpY2tob3VzZV9jbGllbnQgLT4gd2F0dG5ldC5zdG9yYWdlLmNsaWNraG91c2UgIlJlYWRzIC8gV3JpdGVzIiAiU1FMIgoKICAgICAgICB3YXR0bmV0LmdyYWZhbmEgLT4gd2F0dG5ldC5zdG9yYWdlLmNsaWNraG91c2UgIlF1ZXJpZXMiICJTUUwiCiAgICAgICAgd2F0dG5ldC50b29scyAtPiB3YXR0bmV0LnN0b3JhZ2UubWV0cmljc19yZXBvc2l0b3J5ICJSZWFkcyIgCgogICAgICAgIHdhdHRuZXQuZm9yZWNhc3RfZW5naW5lLm1hbmFnZXIgLT4gd2F0dG5ldC5mb3JlY2FzdF9lbmdpbmUuZm9yZWNhc3RfbWFuYWdlciAiVXNlcyIKICAgICAgICB3YXR0bmV0LmZvcmVjYXN0X2VuZ2luZS5zdG9yYWdlX21hbmFnZXIgLT4gd2F0dG5ldC5zdG9yYWdlLm1ldHJpY3NfcmVwb3NpdG9yeSAiUmVhZHMgLyBXcml0ZXMiCiAgICAgICAgd2F0dG5ldC5mb3JlY2FzdF9lbmdpbmUuZm9yZWNhc3RfbWFuYWdlciAtPiB3YXR0bmV0LnpvbmVzX2RlZmluaXRpb24gIlJlYWRzIiAiWUFNTCBGaWxlcyIKICAgICAgICB3YXR0bmV0LmZvcmVjYXN0X2VuZ2luZS5mb3JlY2FzdF9tYW5hZ2VyIC0+IHdhdHRuZXQuZm9yZWNhc3RfZW5naW5lLnN0b3JhZ2VfbWFuYWdlciAiVXNlcyIKICAgICAgICB3YXR0bmV0LmZvcmVjYXN0X2VuZ2luZS5mb3JlY2FzdF9tYW5hZ2VyIC0+IHdhdHRuZXQuZm9yZWNhc3RfZW5naW5lLmxhZ19jb2xsZWN0b3IgIlVzZXMiCiAgICAgICAgd2F0dG5ldC5mb3JlY2FzdF9lbmdpbmUubGFnX2NvbGxlY3RvciAtPiB3YXR0bmV0LmZvcmVjYXN0X2VuZ2luZS5zdG9yYWdlX21hbmFnZXIgIlVzZXMiCiAgICAgICAgd2F0dG5ldC5mb3JlY2FzdF9lbmdpbmUuZm9yZWNhc3RfbWFuYWdlciAtPiB3YXR0bmV0LmZvcmVjYXN0X2VuZ2luZS5wcmVkaWN0b3JfaW50ZXJmYWNlICJVc2VzIgogICAgICAgIHdhdHRuZXQuZm9yZWNhc3RfZW5naW5lLmF1dG9fcmVncmVzc2l2ZV9wcmVkaWN0b3IgLT4gd2F0dG5ldC5mb3JlY2FzdF9lbmdpbmUucHJlZGljdG9yX2ludGVyZmFjZSAiSW1wbGVtZW50cyIKCiAgICB9CgogICAgIyBWaWV3cwoKICAgIHZpZXdzIHsKCiAgICAgICAgc3lzdGVtQ29udGV4dCB3YXR0bmV0IHdhdHRuZXRfY29udGV4dCB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIHdhdHRuZXQgd2F0dG5ldF9jb250YWluZXIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICB9CgogICAgICAgIGNvbXBvbmVudCB3YXR0bmV0LmRhc2hib2FyZCB3YXR0bmV0X2Rhc2hib2FyZCB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgIH0KCiAgICAgICAgY29tcG9uZW50IHdhdHRuZXQuYXBpIHdhdHRuZXRfYXBpIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgd2F0dG5ldC5jb3JlX2VuZ2luZSB3YXR0bmV0X2NvcmVfZW5naW5lIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgd2F0dG5ldC5zdG9yYWdlIHdhdHRuZXRfc3RvcmFnZSB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgIH0KCiAgICAgICAgY29tcG9uZW50IHdhdHRuZXQuZm9yZWNhc3RfZW5naW5lIHdhdHRuZXRfZm9yZWNhc3RfZW5naW5lIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgfQoKICAgICAgICBicmFuZGluZyB7CiAgICAgICAgICAgIGxvZ28gImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9qYWltZWliL2hvc3RpbmcvcmVmcy9oZWFkcy9tYWluL3dhdHRuZXQtbG9nby1pY29uLWRhcmstYmFja2dyb3VuZC1yb3VuZGVkLnBuZyIKICAgICAgICAgICAgZm9udCAiUmVkIEhhdCBEaXNwbGF5IiAiaHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3MyP2ZhbWlseT1SZWQrSGF0K0Rpc3BsYXk6d2dodEA1MDAuLjkwMCIKICAgICAgICB9CgogICAgICAgIHN0eWxlcyB7CgogICAgICAgICAgICBlbGVtZW50ICJTb2Z0d2FyZSBTeXN0ZW0iIHsKICAgICAgICAgICAgICAgIHNoYXBlIHJvdW5kZWRib3gKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzFENDg4QwogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJQZXJzb24iIHsKICAgICAgICAgICAgICAgIHNoYXBlIHBlcnNvbgogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMTQzMjYyCiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIkNvbnRhaW5lciIgewogICAgICAgICAgICAgICAgc2hhcGUgcm91bmRlZGJveAogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjNTM3NEE3CiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIkNvbXBvbmVudCIgewogICAgICAgICAgICAgICAgc2hhcGUgcm91bmRlZGJveAogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjOURCMkQwCiAgICAgICAgICAgICAgICBjb2xvciAjMEIxQzM4CiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIkdyb3VwIiB7CiAgICAgICAgICAgICAgICBzaGFwZSByb3VuZGVkYm94CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM5NENFMjQKICAgICAgICAgICAgICAgIGNvbG9yICM5NENFMjQKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiRGFzaGJvYXJkIiB7CiAgICAgICAgICAgICAgICBzaGFwZSB3ZWJicm93c2VyCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM1Mzc0QTcKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZWxlbWVudCAiRGFzaGJvYXJkL01vbml0b3IiIHsKICAgICAgICAgICAgICAgIHNoYXBlIHdlYmJyb3dzZXIKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzU1ODhlNgogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJSZXBvc2l0b3J5IiB7CiAgICAgICAgICAgICAgICBzaGFwZSBmb2xkZXIKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzk0Q0UyNAogICAgICAgICAgICAgICAgY29sb3IgIzE0MzI2MgogICAgICAgICAgICB9CgogICAgICAgICAgICBlbGVtZW50ICJFeHRlcm5hbCIgewogICAgICAgICAgICAgICAgc2hhcGUgcm91bmRlZGJveAogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMEIxQzM4CiAgICAgICAgICAgICAgICBjb2xvciAjZTZlNmU2CiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIk1vZGVsIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBmb2xkZXIKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzJlNjNjMgogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CiAgICAgICAgfQogICAgfQp9"
   },
   "views" : {
     "componentViews" : [ {
-      "containerId" : "5",
+      "containerId" : "6",
       "dimensions" : {
         "height" : 1340,
         "width" : 937
       },
       "elements" : [ {
-        "id" : "6",
+        "id" : "7",
         "x" : 220,
         "y" : 185
       }, {
-        "id" : "8",
+        "id" : "10",
         "x" : 220,
         "y" : 805
       } ],
@@ -927,167 +1028,183 @@
       "key" : "wattnet_dashboard",
       "order" : 3,
       "relationships" : [ {
-        "id" : "50"
+        "id" : "57"
       } ]
     }, {
-      "containerId" : "8",
+      "containerId" : "10",
       "dimensions" : {
-        "height" : 1305,
-        "width" : 3616
+        "height" : 1631,
+        "width" : 3880
       },
       "elements" : [ {
         "id" : "2",
-        "x" : 199,
-        "y" : 675
+        "x" : 200,
+        "y" : 870
       }, {
-        "id" : "5",
-        "x" : 199,
-        "y" : 205
-      }, {
-        "id" : "9",
-        "x" : 930,
-        "y" : 425
-      }, {
-        "id" : "10",
-        "x" : 1575,
-        "y" : 205
+        "id" : "6",
+        "x" : 200,
+        "y" : 350
       }, {
         "id" : "11",
-        "x" : 1575,
-        "y" : 605
+        "x" : 1003,
+        "y" : 590
       }, {
         "id" : "12",
-        "x" : 2205,
-        "y" : 205
+        "x" : 1745,
+        "y" : 590
       }, {
         "id" : "13",
-        "x" : 2205,
-        "y" : 605
+        "x" : 2487,
+        "y" : 590
       }, {
-        "id" : "27",
-        "x" : 2965,
-        "y" : 425
+        "id" : "14",
+        "x" : 2487,
+        "y" : 185
+      }, {
+        "id" : "15",
+        "x" : 2487,
+        "y" : 1005
+      }, {
+        "id" : "35",
+        "x" : 3230,
+        "y" : 590
       } ],
       "externalContainerBoundariesVisible" : false,
       "key" : "wattnet_api",
       "order" : 4,
       "relationships" : [ {
-        "id" : "46"
-      }, {
-        "id" : "51"
-      }, {
         "id" : "53"
-      }, {
-        "id" : "54"
-      }, {
-        "id" : "55"
-      }, {
-        "id" : "56"
       }, {
         "id" : "58"
       }, {
+        "id" : "60"
+      }, {
+        "id" : "61"
+      }, {
         "id" : "62"
+      }, {
+        "id" : "63"
+      }, {
+        "id" : "65"
       } ]
     }, {
-      "containerId" : "14",
+      "containerId" : "16",
       "dimensions" : {
-        "height" : 2392,
-        "width" : 3087
+        "height" : 2770,
+        "width" : 4929
       },
       "elements" : [ {
         "id" : "3",
-        "x" : 219,
-        "y" : 1857
+        "x" : 220,
+        "y" : 2235
       }, {
-        "id" : "15",
-        "x" : 1683,
-        "y" : 742
-      }, {
-        "id" : "16",
-        "x" : 219,
-        "y" : 1299
+        "id" : "4",
+        "x" : 855,
+        "y" : 2235
       }, {
         "id" : "17",
-        "x" : 2416,
-        "y" : 1299
+        "x" : 2811,
+        "y" : 640
       }, {
         "id" : "18",
-        "x" : 1683,
+        "x" : 3548,
         "y" : 185
       }, {
         "id" : "19",
-        "x" : 2416,
-        "y" : 742
+        "x" : 2015,
+        "y" : 635
       }, {
         "id" : "20",
-        "x" : 2416,
+        "x" : 1250,
         "y" : 185
       }, {
         "id" : "21",
-        "x" : 951,
+        "x" : 2810,
         "y" : 185
       }, {
         "id" : "22",
-        "x" : 219,
+        "x" : 2015,
         "y" : 185
       }, {
         "id" : "23",
-        "x" : 219,
-        "y" : 742
+        "x" : 1250,
+        "y" : 645
       }, {
         "id" : "24",
-        "x" : 1683,
-        "y" : 1299
+        "x" : 1250,
+        "y" : 1130
       }, {
         "id" : "25",
-        "x" : 951,
-        "y" : 1299
+        "x" : 526,
+        "y" : 1130
       }, {
         "id" : "26",
-        "x" : 951,
-        "y" : 742
+        "x" : 220,
+        "y" : 1630
       }, {
         "id" : "27",
-        "x" : 1683,
-        "y" : 1857
+        "x" : 855,
+        "y" : 1630
+      }, {
+        "id" : "28",
+        "x" : 3548,
+        "y" : 640
+      }, {
+        "id" : "29",
+        "x" : 2811,
+        "y" : 1125
+      }, {
+        "id" : "30",
+        "x" : 3548,
+        "y" : 1125
+      }, {
+        "id" : "31",
+        "x" : 3548,
+        "y" : 1625
+      }, {
+        "id" : "32",
+        "x" : 2811,
+        "y" : 1625
       }, {
         "id" : "33",
-        "x" : 2416,
-        "y" : 1857
+        "x" : 2143,
+        "y" : 1630
       }, {
-        "id" : "39",
-        "x" : 951,
-        "y" : 1857
+        "id" : "34",
+        "x" : 1502,
+        "y" : 1630
+      }, {
+        "id" : "35",
+        "x" : 4273,
+        "y" : 640
+      }, {
+        "id" : "49",
+        "x" : 4279,
+        "y" : 185
+      }, {
+        "id" : "50",
+        "x" : 526,
+        "y" : 645
       } ],
       "externalContainerBoundariesVisible" : false,
       "key" : "wattnet_core_engine",
       "order" : 5,
       "relationships" : [ {
-        "id" : "102"
+        "id" : "68"
       }, {
-        "id" : "63"
-      }, {
-        "id" : "64"
-      }, {
-        "id" : "65"
-      }, {
-        "id" : "67"
+        "id" : "69"
       }, {
         "id" : "70"
       }, {
-        "id" : "71"
-      }, {
         "id" : "72"
-      }, {
-        "id" : "73"
-      }, {
-        "id" : "74"
       }, {
         "id" : "75"
       }, {
         "id" : "76"
       }, {
-        "id" : "79"
+        "id" : "77"
+      }, {
+        "id" : "78"
       }, {
         "id" : "80"
       }, {
@@ -1097,70 +1214,9 @@
       }, {
         "id" : "83"
       }, {
-        "id" : "86"
+        "id" : "84"
       }, {
-        "id" : "89"
-      } ]
-    }, {
-      "containerId" : "27",
-      "dimensions" : {
-        "height" : 1730,
-        "width" : 3520
-      },
-      "elements" : [ {
-        "id" : "7",
-        "x" : 220,
-        "y" : 165
-      }, {
-        "id" : "8",
-        "x" : 2635,
-        "y" : 165
-      }, {
-        "id" : "14",
-        "x" : 1926,
-        "y" : 1195
-      }, {
-        "id" : "28",
-        "x" : 2226,
-        "y" : 665
-      }, {
-        "id" : "29",
-        "x" : 2850,
-        "y" : 665
-      }, {
-        "id" : "30",
-        "x" : 1603,
-        "y" : 665
-      }, {
-        "id" : "31",
-        "x" : 980,
-        "y" : 665
-      }, {
-        "id" : "32",
-        "x" : 220,
-        "y" : 665
-      }, {
-        "id" : "34",
-        "x" : 1925,
-        "y" : 165
-      }, {
-        "id" : "39",
-        "x" : 2635,
-        "y" : 1195
-      } ],
-      "externalContainerBoundariesVisible" : false,
-      "key" : "wattnet_storage",
-      "order" : 6,
-      "relationships" : [ {
-        "id" : "101"
-      }, {
-        "id" : "108"
-      }, {
-        "id" : "59"
-      }, {
-        "id" : "68"
-      }, {
-        "id" : "88"
+        "id" : "87"
       }, {
         "id" : "90"
       }, {
@@ -1171,47 +1227,8 @@
         "id" : "93"
       }, {
         "id" : "94"
-      } ]
-    }, {
-      "containerId" : "39",
-      "dimensions" : {
-        "height" : 1291,
-        "width" : 3021
-      },
-      "elements" : [ {
-        "id" : "14",
-        "x" : 2370,
-        "y" : 185
       }, {
-        "id" : "27",
-        "x" : 2370,
-        "y" : 665
-      }, {
-        "id" : "40",
-        "x" : 936,
-        "y" : 185
-      }, {
-        "id" : "41",
-        "x" : 1667,
-        "y" : 665
-      }, {
-        "id" : "42",
-        "x" : 1653,
-        "y" : 185
-      }, {
-        "id" : "43",
-        "x" : 219,
-        "y" : 185
-      } ],
-      "externalContainerBoundariesVisible" : false,
-      "key" : "wattnet_inference_engine",
-      "order" : 7,
-      "relationships" : [ {
-        "id" : "100"
-      }, {
-        "id" : "69"
-      }, {
-        "id" : "87"
+        "id" : "95"
       }, {
         "id" : "96"
       }, {
@@ -1220,36 +1237,66 @@
         "id" : "98"
       } ]
     }, {
-      "containerId" : "34",
+      "containerId" : "35",
       "dimensions" : {
-        "height" : 1321,
-        "width" : 3225
+        "height" : 1740,
+        "width" : 4381
       },
       "elements" : [ {
-        "id" : "27",
-        "x" : 2575,
-        "y" : 695
+        "id" : "8",
+        "x" : 219,
+        "y" : 165
       }, {
-        "id" : "35",
-        "x" : 955,
-        "y" : 195
+        "id" : "9",
+        "x" : 3395,
+        "y" : 1205
+      }, {
+        "id" : "10",
+        "x" : 2666,
+        "y" : 1200
+      }, {
+        "id" : "16",
+        "x" : 3395,
+        "y" : 175
       }, {
         "id" : "36",
-        "x" : 1755,
-        "y" : 695
+        "x" : 3048,
+        "y" : 685
       }, {
         "id" : "37",
-        "x" : 1755,
-        "y" : 185
+        "x" : 3710,
+        "y" : 690
       }, {
         "id" : "38",
-        "x" : 220,
-        "y" : 200
+        "x" : 2378,
+        "y" : 685
+      }, {
+        "id" : "39",
+        "x" : 1708,
+        "y" : 685
+      }, {
+        "id" : "40",
+        "x" : 1038,
+        "y" : 685
+      }, {
+        "id" : "41",
+        "x" : 219,
+        "y" : 685
+      }, {
+        "id" : "42",
+        "x" : 2666,
+        "y" : 180
       } ],
       "externalContainerBoundariesVisible" : false,
-      "key" : "wattnet_forecast_engine",
-      "order" : 8,
+      "key" : "wattnet_storage",
+      "order" : 6,
       "relationships" : [ {
+        "id" : "100"
+      }, {
+        "id" : "101"
+      }, {
+        "id" : "102"
+      }, {
         "id" : "103"
       }, {
         "id" : "104"
@@ -1257,6 +1304,71 @@
         "id" : "105"
       }, {
         "id" : "107"
+      }, {
+        "id" : "112"
+      }, {
+        "id" : "66"
+      }, {
+        "id" : "73"
+      } ]
+    }, {
+      "containerId" : "42",
+      "dimensions" : {
+        "height" : 1801,
+        "width" : 2525
+      },
+      "elements" : [ {
+        "id" : "35",
+        "x" : 1874,
+        "y" : 1175
+      }, {
+        "id" : "43",
+        "x" : 1065,
+        "y" : 185
+      }, {
+        "id" : "44",
+        "x" : 1065,
+        "y" : 1175
+      }, {
+        "id" : "45",
+        "x" : 1065,
+        "y" : 685
+      }, {
+        "id" : "46",
+        "x" : 219,
+        "y" : 1175
+      }, {
+        "id" : "47",
+        "x" : 219,
+        "y" : 685
+      }, {
+        "id" : "48",
+        "x" : 219,
+        "y" : 185
+      }, {
+        "id" : "50",
+        "x" : 1874,
+        "y" : 685
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "wattnet_forecast_engine",
+      "order" : 7,
+      "relationships" : [ {
+        "id" : "109"
+      }, {
+        "id" : "111"
+      }, {
+        "id" : "114"
+      }, {
+        "id" : "116"
+      }, {
+        "id" : "117"
+      }, {
+        "id" : "118"
+      }, {
+        "id" : "119"
+      }, {
+        "id" : "120"
       } ]
     } ],
     "configuration" : {
@@ -1267,7 +1379,8 @@
         },
         "logo" : "https://raw.githubusercontent.com/jaimeib/hosting/refs/heads/main/wattnet-logo-icon-dark-background-rounded.png"
       },
-      "lastSavedView" : "wattnet_api",
+      "lastSavedView" : "wattnet_forecast_engine",
+      "metadataSymbols" : "SquareBrackets",
       "styles" : {
         "elements" : [ {
           "background" : "#1d488c",
@@ -1325,115 +1438,133 @@
     },
     "containerViews" : [ {
       "dimensions" : {
-        "height" : 2815,
-        "width" : 3329
+        "height" : 2550,
+        "width" : 3370
       },
       "elements" : [ {
         "id" : "1",
-        "x" : 265,
+        "x" : 264,
         "y" : 165
       }, {
         "id" : "2",
-        "x" : 1023,
-        "y" : 215
+        "x" : 1054,
+        "y" : 260
       }, {
         "id" : "3",
-        "x" : 1831,
-        "y" : 215
+        "x" : 2719,
+        "y" : 1095
       }, {
-        "id" : "5",
-        "x" : 240,
-        "y" : 872
+        "id" : "4",
+        "x" : 2719,
+        "y" : 1575
       }, {
-        "id" : "7",
-        "x" : 240,
-        "y" : 1480
+        "id" : "6",
+        "x" : 239,
+        "y" : 876
       }, {
         "id" : "8",
-        "x" : 1023,
-        "y" : 872
+        "x" : 239,
+        "y" : 1362
       }, {
-        "id" : "14",
-        "x" : 1831,
-        "y" : 872
+        "id" : "9",
+        "x" : 239,
+        "y" : 1850
       }, {
-        "id" : "27",
-        "x" : 1023,
-        "y" : 1480
+        "id" : "10",
+        "x" : 1054,
+        "y" : 876
       }, {
-        "id" : "33",
-        "x" : 2639,
-        "y" : 872
+        "id" : "16",
+        "x" : 1828,
+        "y" : 1351
       }, {
-        "id" : "34",
-        "x" : 1023,
-        "y" : 2115
+        "id" : "35",
+        "x" : 1054,
+        "y" : 1355
       }, {
-        "id" : "39",
-        "x" : 1831,
-        "y" : 1480
+        "id" : "42",
+        "x" : 1054,
+        "y" : 1850
+      }, {
+        "id" : "49",
+        "x" : 1828,
+        "y" : 876
+      }, {
+        "id" : "50",
+        "x" : 1828,
+        "y" : 1850
       } ],
       "externalSoftwareSystemBoundariesVisible" : false,
       "key" : "wattnet_container",
       "order" : 2,
       "relationships" : [ {
-        "id" : "102"
+        "id" : "106"
       }, {
-        "id" : "109"
+        "id" : "108"
       }, {
-        "id" : "44"
+        "id" : "113"
       }, {
-        "id" : "47"
+        "id" : "115"
       }, {
-        "id" : "52"
+        "id" : "51"
       }, {
-        "id" : "60"
+        "id" : "54"
       }, {
-        "id" : "69"
+        "id" : "59"
       }, {
-        "id" : "77"
+        "id" : "67"
       }, {
-        "id" : "84"
+        "id" : "74"
+      }, {
+        "id" : "79"
+      }, {
+        "id" : "85"
       }, {
         "id" : "88"
       }, {
-        "id" : "95"
+        "id" : "99"
       } ],
-      "softwareSystemId" : "4"
+      "softwareSystemId" : "5"
     } ],
     "systemContextViews" : [ {
       "dimensions" : {
-        "height" : 1495,
-        "width" : 2405
+        "height" : 1305,
+        "width" : 2504
       },
       "elements" : [ {
         "id" : "1",
-        "x" : 225,
+        "x" : 224,
         "y" : 165
       }, {
         "id" : "2",
-        "x" : 200,
-        "y" : 960
+        "x" : 199,
+        "y" : 770
       }, {
         "id" : "3",
-        "x" : 1755,
-        "y" : 600
+        "x" : 1853,
+        "y" : 280
       }, {
         "id" : "4",
-        "x" : 965,
-        "y" : 600
+        "x" : 1853,
+        "y" : 770
+      }, {
+        "id" : "5",
+        "x" : 1028,
+        "y" : 535
       } ],
       "enterpriseBoundaryVisible" : true,
       "key" : "wattnet_context",
       "order" : 1,
       "relationships" : [ {
-        "id" : "45"
+        "id" : "52"
       }, {
-        "id" : "48"
+        "id" : "55"
       }, {
-        "id" : "78"
+        "id" : "86"
+      }, {
+        "id" : "89"
       } ],
-      "softwareSystemId" : "4"
+      "softwareSystemId" : "5"
     } ]
   }
 }
