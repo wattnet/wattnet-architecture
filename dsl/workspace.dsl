@@ -5,7 +5,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
     # Model
 
     model {
-
+        
         properties {
             structurizr.groupSeparator /
         }
@@ -57,42 +57,48 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                 core_engine = container "Core Engine" "Fetch and processes electricity generation data to compute environmental impact metrics." "Python" {
 
-                    manager = component "Workflow Manager" "Manages the workflow of the metrics engine." "Python"
+                    data_processing = group "Data Processing" {
 
-                    factors_reader = component "Factors Reader" "Reads environmental impact factors from YAML files." "Python"
+                        manager = component "Workflow Manager" "Manages the workflow of the metrics engine." "Python"
 
-                    map_builder = component "Map Builder" "Generates the electrical energy map according zones definition and ENTSO-E metrics." "Python"
+                        factors_reader = component "Factors Reader" "Reads environmental impact factors from YAML files." "Python"
 
-                    map_printer = component "Map Printer" "Prints the electrical energy map in a visual format for debugging and analysis purposes." "Python"
+                        map_builder = component "Map Builder" "Generates the electrical energy map according zones definition and ENTSO-E metrics." "Python"
 
-                    impacts_calculator = component "Impacts Calculator" "Computes electrical energy downstream composition matrix and environmental impact metrics." "Python"
+                        map_printer = component "Map Printer" "Prints the electrical energy map in a visual format for debugging and analysis purposes." "Python"
 
-                    flowtracing = component "Flow-Tracing Algorithm" "Computes electrical energy upstream distribution matrix using a flow-tracing approach." "Python"
+                        impacts_calculator = component "Impacts Calculator" "Computes electrical energy downstream composition matrix and environmental impact metrics." "Python"
 
-                    zone_manager = component "Zone Manager" "Handles the zones of the electrical energy map, along with their attributes and status." "Python"
+                        flowtracing = component "Flow-Tracing Algorithm" "Computes electrical energy upstream distribution matrix using a flow-tracing approach." "Python"
 
-                    providers_manager = component "Providers Manager" "Orchestrates pluggable provider implementations." "Python"
+                        zone_manager = component "Zone Manager" "Handles the zones of the electrical energy map, along with their attributes and status." "Python"
 
-                    provider_interface = component "Provider Interface" "Abstract contract implemented by all providers." "Python"
+                        storage_manager = component "Storage Manager" "Handles writing of computed metrics to the metrics storage." "Python"
+                    }
 
-                    entsoe_client = component "ENTSOE Provider Client" "Retrieves electricity data from ENTSO-E API." "Python"
+                    data_ingestion = group "Data Ingestion" {
 
-                    elexon_client = component "Elexon Provider Client" "Retrieves electricity data from Elexon API." "Python"
+                        providers_manager = component "Providers Manager" "Orchestrates pluggable provider implementations." "Python"
 
-                    storage_manager = component "Storage Manager" "Handles writing of computed metrics to the metrics storage." "Python"
+                        provider_interface = component "Provider Interface" "Abstract contract implemented by all providers." "Python"
 
-                    outlier_manager = component "Outlier Manager" "Manages outlier detection and handling in time-series data." "Python"
+                        entsoe_client = component "ENTSOE Provider Client" "Retrieves electricity data from ENTSO-E API." "Python"
 
-                    lag_collector = component "Lag Collector" "Collects and manages lag data for outlier detection in time-series data." "Python"
+                        elexon_client = component "Elexon Provider Client" "Retrieves electricity data from Elexon API." "Python"
 
-                    outlier_detector = component "Outlier Detector" "Detects outliers in time-series data to ensure data quality." "Python"
+                        
+                        outlier_manager = component "Outlier Manager" "Manages outlier detection and handling in time-series data." "Python"
 
-                    estimator_manager = component "Estimator Manager" "Manages estimation techniques for handling missing or incomplete data." "Python"
+                        lag_collector = component "Lag Collector" "Collects and manages lag data for outlier detection in time-series data." "Python"
 
-                    estimator_interface = component "Estimator Interface" "Abstract contract implemented by all estimation techniques." "Python"
+                        outlier_detector = component "Outlier Detector" "Detects outliers in time-series data to ensure data quality." "Python"
 
-                    hybrid_energy_estimator = component "Hybrid Energy Estimator" "Combines multiple estimation techniques to infer missing or incomplete data points in time-series data." "Python"
+                        estimator_manager = component "Estimator Manager" "Manages estimation techniques for handling missing or incomplete data." "Python"
 
+                        estimator_interface = component "Estimator Interface" "Abstract contract implemented by all estimation techniques." "Python"
+
+                        hybrid_energy_estimator = component "Hybrid Energy Estimator" "Combines multiple estimation techniques to infer missing or incomplete data points in time-series data." "Python"
+                    }
                 }
 
                 storage = container "Metrics Storage" "System for storing and retrieving time-series metrics data." "Python + Docker" {
@@ -127,18 +133,18 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                 impacts_data = container "Impacts Database" "Carbon Neutrality in the UNECE Region: Integrated Life-cycle Assessment of Electricity Sources." "Directory with YAML Files" "Repository" {
 
-                    carbon_intensity_factors = component "Carbon Intensity Factors" "Life-cycle and operational carbon intensity factors for electricity generation technologies."  "YAML File" "Repository-Files"
+                    carbon_intensity_factors = component "Carbon Intensity Factors" "Life-cycle and operational carbon intensity factors for electricity generation technologies."  "YAML File" "Files"
 
-                    water_footprint_factors = component "Water Footprint Factors" "Life-cycle and operational water footprint factors for electricity generation technologies." "YAML File" "Repository-Files"
+                    water_footprint_factors = component "Water Footprint Factors" "Life-cycle and operational water footprint factors for electricity generation technologies." "YAML File" "Files"
                 }
 
                 zone_data = container "Zone Database" "Contains metadata about zones, such as their names, EIC codes, and geographical information." "YAML and GEOJSON Files" "Repository" {
 
-                    zones_definition = component "Zones Definition" "Defines zones together with their identifiers, full names, EIC codes, data providers, and cross-border interconnections." "Directory with YAML Files" "Repository-Files"
+                    zones_definition = component "Zones Definition" "Defines zones together with their identifiers, full names, EIC codes, data providers, and cross-border interconnections." "Directory with YAML Files" "Files"
 
-                    zone_geometries = component "Zone Geometries" "Contains high-resolution geographical boundaries of zones for precise geospatial mapping based on latitude and longitude." "Directory with YAML Files" "Repository-Files"
+                    zone_geometries = component "Zone Geometries" "Contains high-resolution geographical boundaries of zones for precise geospatial mapping based on latitude and longitude." "Directory with GEOJSON Files" "Files"
 
-                    map_geometries = component "Map Geometries" "Contains a single file with low-resolution geographical boundaries of all zones optimized for map visualization." "GEOJSON File" "Repository-Files"
+                    map_geometries = component "Map Geometries" "Contains a single file with low-resolution geographical boundaries of all zones optimized for map visualization." "GEOJSON File" "Files"
 
                 }   
             }
@@ -213,39 +219,39 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
     views {
 
-        systemContext wattnet wattnet_context {
+        systemContext wattnet wattnet_context "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
 
-        container wattnet wattnet_container {
+        container wattnet wattnet_container "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
 
-        component wattnet.dashboard wattnet_dashboard {
+        component wattnet.dashboard wattnet_dashboard "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
 
-        component wattnet.api wattnet_api {
+        component wattnet.api wattnet_api "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
 
-        component wattnet.core_engine wattnet_core_engine {
+        component wattnet.core_engine wattnet_core_engine "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
 
-        component wattnet.storage wattnet_storage {
+        component wattnet.storage wattnet_storage "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
 
-        component wattnet.forecast_engine wattnet_forecast_engine {
+        component wattnet.forecast_engine wattnet_forecast_engine "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
 
-        component wattnet.zone_data wattnet_zone_data {
+        component wattnet.zone_data wattnet_zone_data "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
         
-        component wattnet.impacts_data wattnet_impacts_data {
+        component wattnet.impacts_data wattnet_impacts_data  "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
         
@@ -304,7 +310,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
                 color #143262
             }
 
-            element "Repository-Files" {
+            element "Files" {
                 shape folder
                 background #c1e859
                 color #143262
