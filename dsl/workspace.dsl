@@ -125,11 +125,22 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
                     auto_regressive_predictor = component "Auto-Regressive Predictor" "Predictive model that uses auto-regressive techniques to forecast future metrics based on historical data." "Python"
                 }
 
-                impacts_db = container "Impacts Database" "Carbon Neutrality in the UNECE Region: Integrated Life-cycle Assessment of Electricity Sources." "Directory with YAML Files" "Repository" {
+                impacts_data = container "Impacts Database" "Carbon Neutrality in the UNECE Region: Integrated Life-cycle Assessment of Electricity Sources." "Directory with YAML Files" "Repository" {
+
+                    carbon_intensity_factors = component "Carbon Intensity Factors" "Life-cycle and operational carbon intensity factors for electricity generation technologies."  "YAML File" "Repository-Files"
+
+                    water_footprint_factors = component "Water Footprint Factors" "Life-cycle and operational water footprint factors for electricity generation technologies." "YAML File" "Repository-Files"
                 }
 
-                zones_definition = container "Zones Definition" "Specify zones along with their EIC codes, data providers, and cross-border interconnections." "Directory with YAML Files" "Repository" {
-                }
+                zone_data = container "Zone Database" "Contains metadata about zones, such as their names, EIC codes, and geographical information." "YAML and GEOJSON Files" "Repository" {
+
+                    zones_definition = component "Zones Definition" "Defines zones together with their identifiers, full names, EIC codes, data providers, and cross-border interconnections." "Directory with YAML Files" "Repository-Files"
+
+                    zone_geometries = component "Zone Geometries" "Contains high-resolution geographical boundaries of zones for precise geospatial mapping based on latitude and longitude." "Directory with YAML Files" "Repository-Files"
+
+                    map_geometries = component "Map Geometries" "Contains a single file with low-resolution geographical boundaries of all zones optimized for map visualization." "GEOJSON File" "Repository-Files"
+
+                }   
             }
         }
 
@@ -143,6 +154,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.api.runner -> wattnet.api.metric_controller "Routes Requests"
         wattnet.api.metric_controller -> wattnet.api.metrics_service "Uses"
         wattnet.api.metrics_service -> wattnet.api.geo_service "Uses"
+        wattnet.api.geo_service -> wattnet.zone_data.zone_geometries "Reads" "YAML Files"
         wattnet.api.metrics_service -> wattnet.api.operations_service "Uses"
         wattnet.api.metrics_service -> wattnet.storage.metrics_repository "Reads"
 
@@ -154,7 +166,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.core_engine.map_builder -> wattnet.core_engine.flowtracing "Uses" 
         wattnet.core_engine.map_builder -> wattnet.core_engine.zone_manager "Uses" 
         wattnet.core_engine.map_builder -> wattnet.core_engine.map_printer "Uses"
-        wattnet.core_engine.zone_manager -> wattnet.zones_definition "Reads" "YAML Files"
+        wattnet.core_engine.zone_manager -> wattnet.zone_data.zones_definition "Reads" "YAML Files"
         wattnet.core_engine.zone_manager -> wattnet.core_engine.providers_manager "Uses" 
         wattnet.core_engine.providers_manager -> wattnet.core_engine.provider_interface "Uses"
         wattnet.core_engine.entsoe_client -> wattnet.core_engine.provider_interface "Implements"
@@ -172,7 +184,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.core_engine.hybrid_energy_estimator -> wattnet.core_engine.estimator_interface "Implements"
 
         wattnet.core_engine.impacts_calculator -> wattnet.core_engine.factors_reader "Fetch"
-        wattnet.core_engine.factors_reader -> wattnet.impacts_db "Reads" "YAML Files"
+        wattnet.core_engine.factors_reader -> wattnet.impacts_data "Reads" "YAML Files"
     
         wattnet.storage.metrics_repository -> wattnet.storage.time_series_processor "Uses"
         wattnet.storage.metrics_repository -> wattnet.storage.storage_manager "Uses"
@@ -182,15 +194,18 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
         wattnet.grafana -> wattnet.storage.clickhouse "Queries" "SQL"
         wattnet.tools -> wattnet.storage.metrics_repository "Reads" 
+        wattnet.tools -> wattnet.zone_data.map_geometries "Reads" "GEOJSON Files"
 
         wattnet.forecast_engine.manager -> wattnet.forecast_engine.forecast_manager "Uses"
         wattnet.forecast_engine.storage_manager -> wattnet.storage.metrics_repository "Reads / Writes"
-        wattnet.forecast_engine.forecast_manager -> wattnet.zones_definition "Reads" "YAML Files"
+        wattnet.forecast_engine.forecast_manager -> wattnet.zone_data.zones_definition "Reads" "YAML Files"
         wattnet.forecast_engine.forecast_manager -> wattnet.forecast_engine.storage_manager "Uses"
         wattnet.forecast_engine.forecast_manager -> wattnet.forecast_engine.lag_collector "Uses"
         wattnet.forecast_engine.lag_collector -> wattnet.forecast_engine.storage_manager "Uses"
         wattnet.forecast_engine.forecast_manager -> wattnet.forecast_engine.predictor_interface "Uses"
         wattnet.forecast_engine.auto_regressive_predictor -> wattnet.forecast_engine.predictor_interface "Implements"
+
+        wattnet.dashboard.service -> wattnet.zone_data.map_geometries "Reads" "GEOJSON Files"
 
     }
 
@@ -226,6 +241,14 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
             include *
         }
 
+        component wattnet.zone_data wattnet_zone_data {
+            include *
+        }
+        
+        component wattnet.impacts_data wattnet_impacts_data {
+            include *
+        }
+        
         branding {
             logo "https://raw.githubusercontent.com/jaimeib/hosting/refs/heads/main/wattnet-logo-icon-dark-background-rounded.png"
             font "Red Hat Display" "https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500..900"
@@ -278,6 +301,12 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
             element "Repository" {
                 shape folder
                 background #94CE24
+                color #143262
+            }
+
+            element "Repository-Files" {
+                shape folder
+                background #c1e859
                 color #143262
             }
 
