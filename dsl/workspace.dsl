@@ -24,7 +24,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet = softwareSystem "wattnet" "An open-source service for tracking the environmental footprint of electricity across Europe." {
 
             frontend = group "Frontend" {
-                dashboard = container "Dashboard" " The dashboard lets you explore all metrics in a clear, interactive, and visually engaging interface. " "Angular" "Dashboard" {
+                dashboard = container "Dashboard" " The dashboard lets you explore all metrics in a clear, interactive, and visually engaging interface. " "React" "Dashboard" {
                     service = component "Service" "Service description."
                 }
 
@@ -78,27 +78,43 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                     data_ingestion = group "Data Ingestion" {
 
-                        providers_manager = component "Providers Manager" "Orchestrates pluggable provider implementations." "Python"
+                        official_data = group "Official Data Ingestion" {
 
-                        provider_interface = component "Provider Interface" "Abstract contract implemented by all providers." "Python"
+                            provider_interface = component "Provider Interface" "Abstract contract implemented by all providers." "Python"
 
-                        entsoe_client = component "ENTSOE Provider Client" "Retrieves electricity data from ENTSO-E API." "Python"
+                            entsoe_client = component "ENTSOE Provider Client" "Retrieves electricity data from ENTSO-E API." "Python"
 
-                        elexon_client = component "Elexon Provider Client" "Retrieves electricity data from Elexon API." "Python"
+                            elexon_client = component "Elexon Provider Client" "Retrieves electricity data from Elexon API." "Python"
 
+                            provider_staging_cache = component "Provider Staging Cache" "Persists pre-processed API responses to disk, avoiding redundant external calls." "FileSystem"
                         
-                        outlier_manager = component "Outlier Manager" "Manages outlier detection and handling in time-series data." "Python"
+                            redis_rate_limiter = component "Rate Limit Controller" "Controls request rate to external APIs using a shared Redis instance." "Redis"
 
-                        lag_collector = component "Lag Collector" "Collects and manages lag data for outlier detection in time-series data." "Python"
+                        }
 
-                        outlier_detector = component "Outlier Detector" "Detects outliers in time-series data to ensure data quality." "Python"
+                        estimated_data = group "Estimated Data Ingestion" {
 
-                        estimator_manager = component "Estimator Manager" "Manages estimation techniques for handling missing or incomplete data." "Python"
+                            outlier_manager = component "Outlier Manager" "Manages outlier detection and handling in time-series data." "Python"
 
-                        estimator_interface = component "Estimator Interface" "Abstract contract implemented by all estimation techniques." "Python"
+                            lag_collector = component "Lag Collector" "Collects and manages lag data for outlier detection in time-series data." "Python"
 
-                        hybrid_energy_estimator = component "Hybrid Energy Estimator" "Combines multiple estimation techniques to infer missing or incomplete data points in time-series data." "Python"
+                            lag_cache = component "In-Memory Lag Cache" "In-memory cache for storing lag data to optimize outlier detection performance." "Python"
+
+                            outlier_detector = component "Outlier Detector" "Detects outliers in time-series data to ensure data quality." "Python"
+
+                            estimator_manager = component "Estimator Manager" "Manages estimation techniques for handling missing or incomplete data." "Python"
+
+                            estimator_interface = component "Estimator Interface" "Abstract contract implemented by all estimation techniques." "Python"
+
+                            hybrid_energy_estimator = component "Hybrid Energy Estimator" "Combines multiple estimation techniques to infer missing or incomplete data points in time-series data." "Python"
+
+                        }
+
+                        providers_manager = component "Providers Manager" "Orchestrates pluggable provider implementations." "Python"
                     }
+                }
+
+                redis = container "Rate Limit Store" "Redis instance used for controlling request rate to external APIs." "Docker: redis" {
                 }
 
                 storage = container "Metrics Storage" "System for storing and retrieving time-series metrics data." "Python + Docker" {
@@ -179,11 +195,17 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.core_engine.elexon_client -> wattnet.core_engine.provider_interface "Implements"
         wattnet.core_engine.entsoe_client -> entsoe_api "Request Data" "web-api.tp.entsoe.eu/api"
         wattnet.core_engine.elexon_client -> elexon_api "Request Data" "data.elexon.co.uk/bmrs/api/v1"
-        wattnet.core_engine.providers_manager -> wattnet.core_engine.outlier_manager "Uses"
+        wattnet.core_engine.entsoe_client -> wattnet.core_engine.provider_staging_cache "Uses"
+        wattnet.core_engine.elexon_client -> wattnet.core_engine.provider_staging_cache "Uses"
+        wattnet.core_engine.entsoe_client -> wattnet.core_engine.redis_rate_limiter "Uses"
+        wattnet.core_engine.elexon_client -> wattnet.core_engine.redis_rate_limiter "Uses"
+        wattnet.core_engine.redis_rate_limiter -> wattnet.redis "Reads and writes rate limit counters" "Redis Protocol"
 
+        wattnet.core_engine.providers_manager -> wattnet.core_engine.outlier_manager "Uses"
         wattnet.core_engine.outlier_manager -> wattnet.core_engine.lag_collector "Uses"
         wattnet.core_engine.outlier_manager -> wattnet.core_engine.outlier_detector "Uses"
         wattnet.core_engine.lag_collector -> wattnet.core_engine.storage_manager "Uses"
+        wattnet.core_engine.lag_collector -> wattnet.core_engine.lag_cache "Uses"
 
         wattnet.core_engine.outlier_manager -> wattnet.core_engine.estimator_manager "Uses"
         wattnet.core_engine.estimator_manager -> wattnet.core_engine.estimator_interface "Uses"
