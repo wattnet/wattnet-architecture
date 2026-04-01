@@ -43,7 +43,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                     v1 = group "v1" {
 
-                        metric_controller = component "Generic Metric Controller" "Handles requests related to system domain metrics, such as generation, import, export, footprint, flow share, mix share, footprint share and factors." "Python / FastAPI"
+                        metric_controller = component "Generic Metric Controller" "Handles requests related to system domain entities, such as zones and metrics, and routes them to the appropriate service methods." "Python / FastAPI"
                         
                     }
 
@@ -61,13 +61,13 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                         manager = component "Workflow Manager" "Manages the workflow of the metrics engine." "Python"
 
-                        factors_reader = component "Factors Reader" "Reads environmental impact factors from YAML files." "Python"
+                        factors_reader = component "Factors Reader" "Reads environmental characterization factors from the Environmental Database." "Python"
 
                         map_builder = component "Map Builder" "Generates the electrical energy map according zones definition and ENTSO-E metrics." "Python"
 
                         map_printer = component "Map Printer" "Prints the electrical energy map in a visual format for debugging and analysis purposes." "Python"
 
-                        impacts_calculator = component "Impacts Calculator" "Computes electrical energy downstream composition matrix and environmental impact metrics." "Python"
+                        environmental_calculator = component "Environmental Calculator" "Calculates environmental impact metrics by applying the appropriate factors to the electrical energy map." "Python"
 
                         flowtracing = component "Flow-Tracing Algorithm" "Computes electrical energy upstream distribution matrix using a flow-tracing approach." "Python"
 
@@ -147,11 +147,13 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
                     auto_regressive_predictor = component "Auto-Regressive Predictor" "Predictive model that uses auto-regressive techniques to forecast future metrics based on historical data." "Python"
                 }
 
-                impacts_data = container "Impacts Database" "Carbon Neutrality in the UNECE Region: Integrated Life-cycle Assessment of Electricity Sources." "Directory with YAML Files" "Repository" {
+                environmental_data = container "Environmental Database" "Environmental factors for electricity generation, covering carbon, water, and scarcity metrics." "YAML Files" "Repository" {
 
-                    carbon_intensity_factors = component "Carbon Intensity Factors" "Life-cycle and operational carbon intensity factors for electricity generation technologies."  "YAML File" "Files"
+                    carbon_intensity_factors = component "Carbon Intensity Factors" "Life-cycle and operational carbon intensity factors per unit of electricity generated." "YAML File" "Files"
 
-                    water_footprint_factors = component "Water Footprint Factors" "Life-cycle and operational water footprint factors for electricity generation technologies." "YAML File" "Files"
+                    water_footprint_factors = component "Water Footprint Factors" "Life-cycle and operational water consumption factors per unit of electricity generated." "YAML File" "Files"
+
+                    hidric_stress_factors = component "Hidric Stress Factors" "AWARE-based regional water scarcity characterization factors for weighting water impact." "YAML File" "Files"
                 }
 
                 zone_data = container "Zone Database" "Contains metadata about zones, such as their names, EIC codes, and geographical information." "YAML and GEOJSON Files" "Repository" {
@@ -161,7 +163,6 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
                     zone_geometries = component "Zone Geometries" "Contains high-resolution geographical boundaries of zones for precise geospatial mapping based on latitude and longitude." "Directory with GEOJSON Files" "Files"
 
                     map_geometries = component "Map Geometries" "Contains a single file with low-resolution geographical boundaries of all zones optimized for map visualization." "GEOJSON File" "Files"
-
                 }   
             }
         }
@@ -181,7 +182,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.api.metrics_service -> wattnet.storage.metrics_repository "Reads"
 
         wattnet.core_engine.manager -> wattnet.core_engine.map_builder "Uses" 
-        wattnet.core_engine.manager -> wattnet.core_engine.impacts_calculator "Uses"    
+        wattnet.core_engine.manager -> wattnet.core_engine.environmental_calculator "Uses"    
         wattnet.core_engine.manager -> wattnet.core_engine.storage_manager "Uses"
         wattnet.core_engine.storage_manager -> wattnet.storage.metrics_repository "Reads / Writes"
 
@@ -211,9 +212,11 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.core_engine.estimator_manager -> wattnet.core_engine.estimator_interface "Uses"
         wattnet.core_engine.hybrid_energy_estimator -> wattnet.core_engine.estimator_interface "Implements"
 
-        wattnet.core_engine.impacts_calculator -> wattnet.core_engine.factors_reader "Fetch"
-        wattnet.core_engine.factors_reader -> wattnet.impacts_data "Reads" "YAML Files"
-    
+        wattnet.core_engine.environmental_calculator -> wattnet.core_engine.factors_reader "Fetch"
+        wattnet.core_engine.factors_reader -> wattnet.environmental_data.carbon_intensity_factors "Reads" "YAML Files"
+        wattnet.core_engine.factors_reader -> wattnet.environmental_data.water_footprint_factors "Reads" "YAML Files"
+        wattnet.core_engine.factors_reader -> wattnet.environmental_data.hidric_stress_factors "Reads" "YAML Files"
+        
         wattnet.storage.metrics_repository -> wattnet.storage.time_series_processor "Uses"
         wattnet.storage.metrics_repository -> wattnet.storage.storage_manager "Uses"
         wattnet.storage.storage_manager -> wattnet.storage.storage_backend_interface "Uses"
@@ -273,7 +276,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
             include *
         }
         
-        component wattnet.impacts_data wattnet_impacts_data  "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
+        component wattnet.environmental_data wattnet_impacts_data  "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
         
