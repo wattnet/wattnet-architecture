@@ -140,6 +140,10 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                     forecast_manager = component "Forecast Manager" "Orchestrates the forecasting process, including data retrieval, and model execution." "Python"
 
+                    environmental_calculator = component "Environmental Calculator" "Calculates environmental impact metrics by applying the appropriate factors to the forecasted electrical energy map." "Python"
+
+                    factors_reader = component "Factors Reader" "Reads environmental characterization factors from the Environmental Database." "Python"
+
                     lag_collector = component "Lag Collector" "Collects and manages lag data for predictive modeling in time-series data." "Python"
 
                     predictor_interface = component "Predictor Interface" "Abstract contract implemented by all predictive models." "Python"
@@ -153,7 +157,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                     water_footprint_factors = component "Water Footprint Factors" "Life-cycle and operational water consumption factors per unit of electricity generated." "YAML File" "Files"
 
-                    hidric_stress_factors = component "Hidric Stress Factors" "AWARE-based regional water scarcity characterization factors for weighting water impact." "YAML File" "Files"
+                    water_stress_factors = component "Water Stress Factors" "AWARE-based regional water scarcity characterization factors for weighting water impact." "YAML File" "Files"
                 }
 
                 zone_data = container "Zone Database" "Contains metadata about zones, such as their names, EIC codes, and geographical information." "YAML and GEOJSON Files" "Repository" {
@@ -215,7 +219,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.core_engine.environmental_calculator -> wattnet.core_engine.factors_reader "Fetch"
         wattnet.core_engine.factors_reader -> wattnet.environmental_data.carbon_intensity_factors "Reads" "YAML Files"
         wattnet.core_engine.factors_reader -> wattnet.environmental_data.water_footprint_factors "Reads" "YAML Files"
-        wattnet.core_engine.factors_reader -> wattnet.environmental_data.hidric_stress_factors "Reads" "YAML Files"
+        wattnet.core_engine.factors_reader -> wattnet.environmental_data.water_stress_factors "Reads" "YAML Files"
         
         wattnet.storage.metrics_repository -> wattnet.storage.time_series_processor "Uses"
         wattnet.storage.metrics_repository -> wattnet.storage.storage_manager "Uses"
@@ -230,6 +234,9 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.forecast_engine.manager -> wattnet.forecast_engine.forecast_manager "Uses"
         wattnet.forecast_engine.storage_manager -> wattnet.storage.metrics_repository "Reads / Writes"
         wattnet.forecast_engine.forecast_manager -> wattnet.zone_data.zones_definition "Reads" "YAML Files"
+        wattnet.forecast_engine.forecast_manager -> wattnet.forecast_engine.environmental_calculator "Uses"
+        wattnet.forecast_engine.environmental_calculator -> wattnet.forecast_engine.factors_reader "Uses"
+        wattnet.forecast_engine.factors_reader -> wattnet.environmental_data.water_stress_factors "Reads" "YAML Files"
         wattnet.forecast_engine.forecast_manager -> wattnet.forecast_engine.storage_manager "Uses"
         wattnet.forecast_engine.forecast_manager -> wattnet.forecast_engine.lag_collector "Uses"
         wattnet.forecast_engine.lag_collector -> wattnet.forecast_engine.storage_manager "Uses"
@@ -276,7 +283,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
             include *
         }
         
-        component wattnet.environmental_data wattnet_impacts_data  "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
+        component wattnet.environmental_data wattnet_environmental_data  "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
         
