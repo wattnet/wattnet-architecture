@@ -25,6 +25,19 @@ The architecture is organized into four main levels:
 
 The diagrams are created using the C4 model, which emphasizes clarity and simplicity in representing software architecture. The Structurizr DSL code allows for easy maintenance and updates to the diagrams as the system evolves.
 
+## Viewing the diagrams
+
+The diagrams can be viewed and edited interactively using [Structurizr Lite](https://docs.structurizr.com/lite). From the root of the repository, run:
+
+```bash
+docker run -it --rm \
+  -p 8080:8080 \
+  -v "$(pwd)/dsl:/usr/local/structurizr" \
+  structurizr/lite:2024.12.07
+```
+
+Then open [http://localhost:8080](http://localhost:8080) in your browser. Structurizr Lite watches `dsl/workspace.dsl` for changes and keeps `dsl/workspace.json` in sync automatically.
+
 ## Repository structure
 
 - `/diagrams`: Contains the generated diagrams in various formats (PNG, SVG, etc.).
