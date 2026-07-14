@@ -13,6 +13,11 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         user = person "User" "An individual who accesses and analyzes environmental impact data through wattnet."
 
         external_consumer = softwareSystem "External Consumer" "A third-party system or service that connects to wattnet to retrieve and use environmental impact data." "External" {
+
+            app = container "Third-Party Application" "A generic application, script, or notebook built by a third party that integrates with wattnet." "External" "Container/External" {
+
+                client = component "wattnet-client" "Python library that provides a function-based interface for interacting with the wattnet API, mapping each endpoint to a corresponding Python function." "Python" "Python-Library"
+            }
         }
 
         entsoe_api = softwareSystem "ENTSO-E Public API" "European Network of Transmission System Operators for Electricity RESTful API." "External" {
@@ -24,8 +29,33 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet = softwareSystem "wattnet" "An open-source service for tracking the environmental footprint of electricity across Europe." {
 
             frontend = group "Frontend" {
-                dashboard = container "Dashboard" " The dashboard lets you explore all metrics in a clear, interactive, and visually engaging interface. " "React" "Dashboard" {
-                    service = component "Service" "Service description."
+                dashboard = container "Web Dashboard" " The web dashboard lets you explore all metrics in a clear, interactive, and visually engaging interface. " "React" "Dashboard" {
+
+                    presentation = group "Presentation" {
+
+                        shell = component "Dashboard Shell" "Provides the persistent page layout: collapsible sidebar, zone detail panel, and responsive mobile sheets." "React"
+
+                        map_view = component "Map View Controller" "Orchestrates the main dashboard page: date/time range, URL-synced view state, and wiring of map data into the renderer." "React"
+
+                        map_renderer = component "Map Renderer" "Renders zone polygons on an interactive map, choropleth-colored by the selected metric." "MapLibre GL"
+
+                        flow_arrows = component "Flow Arrows Overlay" "Displays animated cross-border power-exchange arrows anchored at real border-crossing coordinates." "React / SVG"
+
+                        sidebar_controls = component "Sidebar Controls" "Metric, dimension, scope, and date/time-range selection controls, including the live-scrub time slider." "React / MUI"
+
+                        theme_engine = component "Theme Engine" "Provides light, dark and colorblind-safe color palettes for choropleth scales and UI." "React Context"
+                    }
+
+                    state_and_data = group "State & Data" {
+
+                        dashboard_store = component "Dashboard Store" "Holds shared UI and selection state: active metric, selected zone/flow, panel and layout state." "Zustand"
+
+                        data_service = component "Data Service" "Fetches and shapes all dashboard data for the map and panels, and revalidates on demand." "SWR"
+
+                        live_refresh = component "Live Refresh Engine" "Polls for newly published data slots, advances the displayed time slot, and triggers revalidation to keep the dashboard current." "TypeScript"
+
+                        api_gateway = component "API Gateway" "Issues short-lived tokens and proxies dashboard requests to the wattnet API, hiding upstream credentials from the browser." "Next.js Route Handlers"
+                    }
                 }
 
                 grafana = container "Grafana" "Metrics visualization and \n monitoring dashboards. \n Only for monitoring." "Docker: grafana/grafana" "Dashboard/Monitor"{
@@ -65,15 +95,13 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
                         map_builder = component "Map Builder" "Generates the electrical energy map according zones definition and ENTSO-E metrics." "Python"
 
-                        map_printer = component "Map Printer" "Prints the electrical energy map in a visual format for debugging and analysis purposes." "Python"
-
                         environmental_calculator = component "Environmental Calculator" "Calculates environmental impact metrics by applying the appropriate factors to the electrical energy map." "Python"
 
                         flowtracing = component "Flow-Tracing Algorithm" "Computes electrical energy upstream distribution matrix using a flow-tracing approach." "Python"
 
                         zone_manager = component "Zone Manager" "Handles the zones of the electrical energy map, along with their attributes and status." "Python"
 
-                        storage_manager = component "Storage Manager" "Handles writing of computed metrics to the metrics storage." "Python"
+                        storage_manager = component "Storage Manager" "Reads and writes computed metrics to the metrics storage." "Python"
                     }
 
                     data_ingestion = group "Data Ingestion" {
@@ -107,6 +135,8 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
                             estimator_interface = component "Estimator Interface" "Abstract contract implemented by all estimation techniques." "Python"
 
                             hybrid_energy_estimator = component "Hybrid Energy Estimator" "Combines multiple estimation techniques to infer missing or incomplete data points in time-series data." "Python"
+
+                            native_resolution_registry = component "Resolution Registry" "Classifies each zone/source's native data resolution once at startup, giving the outlier guard a durable signal." "Python"
 
                         }
 
@@ -174,9 +204,30 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         # Relationships
 
         user -> wattnet.dashboard "Uses" "dashboard.wattnet.eu"
+        user -> wattnet.dashboard.shell "Uses" "dashboard.wattnet.eu"
 
         external_consumer -> wattnet.api.runner "Request" "api.wattnet.eu/v1"
-        wattnet.dashboard.service -> wattnet.api.runner "Request" "api.wattnet.eu/v1"
+        external_consumer.app.client -> wattnet.api.runner "Request" "api.wattnet.eu/v1" "wattnet-client (Python)"
+
+        wattnet.dashboard.shell -> wattnet.dashboard.map_view "Renders"
+        wattnet.dashboard.shell -> wattnet.dashboard.sidebar_controls "Renders" "Metric / dimension / scope controls"
+        wattnet.dashboard.shell -> wattnet.dashboard.theme_engine "Uses"
+        wattnet.dashboard.map_view -> wattnet.dashboard.map_renderer "Renders"
+        wattnet.dashboard.map_view -> wattnet.dashboard.flow_arrows "Renders"
+        wattnet.dashboard.map_view -> wattnet.dashboard.sidebar_controls "Renders" "Time slider (portal)"
+        wattnet.dashboard.map_view -> wattnet.dashboard.data_service "Reads"
+        wattnet.dashboard.map_view -> wattnet.dashboard.dashboard_store "Reads / Writes"
+        wattnet.dashboard.map_view -> wattnet.dashboard.theme_engine "Uses"
+        wattnet.dashboard.sidebar_controls -> wattnet.dashboard.dashboard_store "Reads / Writes"
+        wattnet.dashboard.map_renderer -> wattnet.dashboard.dashboard_store "Reads / Writes"
+        wattnet.dashboard.map_renderer -> wattnet.dashboard.theme_engine "Uses"
+        wattnet.dashboard.flow_arrows -> wattnet.dashboard.dashboard_store "Reads"
+        wattnet.dashboard.flow_arrows -> wattnet.dashboard.theme_engine "Uses"
+        wattnet.dashboard.data_service -> wattnet.dashboard.api_gateway "Request" "/api/core, /api/metrics, /api/imports"
+        wattnet.dashboard.live_refresh -> wattnet.dashboard.map_view "Advances time slider"
+        wattnet.dashboard.live_refresh -> wattnet.dashboard.data_service "Triggers Revalidation" "Footprint data only"
+        wattnet.dashboard.live_refresh -> wattnet.dashboard.api_gateway "Probe" "/api/metrics"
+        wattnet.dashboard.api_gateway -> wattnet.api.runner "Request" "api.wattnet.eu/v1"
 
         wattnet.api.runner -> wattnet.api.metric_controller "Routes Requests"
         wattnet.api.metric_controller -> wattnet.api.metrics_service "Uses"
@@ -190,11 +241,12 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.core_engine.manager -> wattnet.core_engine.storage_manager "Uses"
         wattnet.core_engine.storage_manager -> wattnet.storage.metrics_repository "Reads / Writes"
 
-        wattnet.core_engine.map_builder -> wattnet.core_engine.flowtracing "Uses" 
-        wattnet.core_engine.map_builder -> wattnet.core_engine.zone_manager "Uses" 
-        wattnet.core_engine.map_builder -> wattnet.core_engine.map_printer "Uses"
+        wattnet.core_engine.map_builder -> wattnet.core_engine.flowtracing "Uses"
+        wattnet.core_engine.map_builder -> wattnet.core_engine.zone_manager "Uses"
         wattnet.core_engine.zone_manager -> wattnet.zone_data.zones_definition "Reads" "YAML Files"
-        wattnet.core_engine.zone_manager -> wattnet.core_engine.providers_manager "Uses" 
+        wattnet.core_engine.zone_manager -> wattnet.core_engine.providers_manager "Uses"
+        wattnet.core_engine.zone_manager -> wattnet.core_engine.native_resolution_registry "Creates and warms up at startup"
+        wattnet.core_engine.native_resolution_registry -> wattnet.core_engine.storage_manager "Reads historical series (warm-up)"
         wattnet.core_engine.providers_manager -> wattnet.core_engine.provider_interface "Uses"
         wattnet.core_engine.entsoe_client -> wattnet.core_engine.provider_interface "Implements"
         wattnet.core_engine.elexon_client -> wattnet.core_engine.provider_interface "Implements"
@@ -207,6 +259,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.core_engine.redis_rate_limiter -> wattnet.redis "Reads and writes rate limit counters" "Redis Protocol"
 
         wattnet.core_engine.providers_manager -> wattnet.core_engine.outlier_manager "Uses"
+        wattnet.core_engine.outlier_manager -> wattnet.core_engine.native_resolution_registry "Uses" "Native-resolution guard"
         wattnet.core_engine.outlier_manager -> wattnet.core_engine.lag_collector "Uses"
         wattnet.core_engine.outlier_manager -> wattnet.core_engine.outlier_detector "Uses"
         wattnet.core_engine.lag_collector -> wattnet.core_engine.storage_manager "Uses"
@@ -243,7 +296,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         wattnet.forecast_engine.forecast_manager -> wattnet.forecast_engine.predictor_interface "Uses"
         wattnet.forecast_engine.auto_regressive_predictor -> wattnet.forecast_engine.predictor_interface "Implements"
 
-        wattnet.dashboard.service -> wattnet.zone_data.map_geometries "Reads" "GEOJSON Files"
+        wattnet.dashboard.map_renderer -> wattnet.zone_data.map_geometries "Reads" "GEOJSON Files"
 
     }
 
@@ -256,6 +309,14 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
         }
 
         container wattnet wattnet_container "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
+            include *
+        }
+
+        container external_consumer external_consumer_container "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
+            include *
+        }
+
+        component external_consumer.app external_consumer_app "© Spanish National Research Council (CSIC) | Licensed under CC BY 4.0" {
             include *
         }
 
@@ -336,6 +397,12 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
                 color #ffffff
             }
 
+            element "Python-Library" {
+                shape roundedbox
+                background #3776AB
+                color #ffffff
+            }
+
             element "Repository" {
                 shape folder
                 background #94CE24
@@ -349,6 +416,12 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
             }
 
             element "External" {
+                shape roundedbox
+                background #0B1C38
+                color #e6e6e6
+            }
+
+            element "Container/External" {
                 shape roundedbox
                 background #0B1C38
                 color #e6e6e6
