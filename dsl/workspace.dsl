@@ -16,7 +16,7 @@ workspace "wattnet" "An open-source service for tracking the environmental footp
 
             app = container "Third-Party Application" "A generic application, script, or notebook built by a third party that integrates with wattnet." "External" "Container/External" {
 
-                client = component "wattnet-client" "Python library that provides a function-based interface for interacting with the wattnet API, mapping each endpoint to a corresponding Python function." "Python" "Python-Library"
+                client = component "wattnet-client-python" "Python library that provides a function-based interface for interacting with the wattnet API, mapping each endpoint to a corresponding Python function." "Python" "Python-Library"
             }
         }
 
